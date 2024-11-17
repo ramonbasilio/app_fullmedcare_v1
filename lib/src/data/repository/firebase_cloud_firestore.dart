@@ -1,16 +1,31 @@
 import 'package:app_fullmedcare_v1/src/data/model/company.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 class FirebaseCloudFirestore {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
-  Future<void> registerCompany({required Company company}) async {
-    await _firebaseFirestore
-        .collection('User')
-        .doc('fullmedcare@gmail.com')
-        .collection('Companies')
-        .doc(company.id)
-        .set(company.toMap());
+  Future<void> registerCompany(
+      {required Company company, required BuildContext context}) async {
+    try {
+      await _firebaseFirestore
+          .collection('User')
+          .doc('fullmedcare@gmail.com')
+          .collection('Companies')
+          .doc(company.id)
+          .set(company.toMap());
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Cadastro realizado com sucesso!')),
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Falha ao salvar. Erro: $e')),
+        );
+      }
+    }
   }
 
   Future<List<Company>> getAllCompanies() async {
@@ -27,6 +42,4 @@ class FirebaseCloudFirestore {
     });
     return listCompanies;
   }
-
-  
 }

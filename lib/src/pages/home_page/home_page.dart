@@ -1,4 +1,4 @@
-import 'package:app_fullmedcare_v1/src/pages/register_enterprise/register_enterprise.dart';
+import 'package:app_fullmedcare_v1/src/pages/register_company/register_company.dart';
 import 'package:app_fullmedcare_v1/src/widgets/buttom_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
