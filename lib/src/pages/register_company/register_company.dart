@@ -1,5 +1,7 @@
+import 'package:app_fullmedcare_v1/src/data/model/address.dart';
 import 'package:app_fullmedcare_v1/src/data/model/company.dart';
 import 'package:app_fullmedcare_v1/src/data/repository/firebase_cloud_firestore.dart';
+import 'package:app_fullmedcare_v1/src/data/repository/search_cep.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -12,8 +14,6 @@ class RegisterCompanyPage extends StatefulWidget {
 
 class _RegisterCompanyPageState extends State<RegisterCompanyPage> {
   final _formKey = GlobalKey<FormState>();
-
-  // Controladores de texto
   final _nameController = TextEditingController();
   final _addresscoController = TextEditingController();
   final _numberController = TextEditingController();
@@ -24,12 +24,12 @@ class _RegisterCompanyPageState extends State<RegisterCompanyPage> {
   final _cepController = TextEditingController();
   final _cnpjController = TextEditingController();
 
-    final cepMask = MaskTextInputFormatter(
-      initialText: '#####-###',
-      mask: '#####-###');
-    
-    final cnpjMask = MaskTextInputFormatter(
-      mask: '##.###.###/####-##');
+  final cepMask =
+      MaskTextInputFormatter(initialText: '#####-###', mask: '#####-###');
+
+  final cnpjMask = MaskTextInputFormatter(mask: '##.###.###/####-##');
+
+  late Address address;
 
   @override
   void dispose() {
@@ -85,6 +85,38 @@ class _RegisterCompanyPageState extends State<RegisterCompanyPage> {
                 validator: _validateCNPJ,
               ),
               TextFormField(
+                controller: _cepController,
+                onChanged: (value) async {
+                  value = value.replaceAll('-', '');
+                  if (value.length == 8) {
+                    try {
+                      address = await SearchCep().fetchData(value);
+                      setState(() {
+                        _addresscoController.text = address.logradouro;
+                        _complementController.text = address.complemento;
+                        _districtController.text = address.bairro;
+                        _cityController.text = address.cidade;
+                        _stateController.text = address.estado;
+                      });
+                    } catch (e) {
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text('Erro: $e')));
+                      }
+                    }
+                  }
+                },
+                inputFormatters: [cepMask],
+                decoration: const InputDecoration(labelText: 'CEP'),
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'CEP é obrigatório';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
                 controller: _addresscoController,
                 decoration: const InputDecoration(labelText: 'Endereço'),
                 validator: (value) => _validateNotEmpty(value, 'Endereço'),
@@ -112,18 +144,6 @@ class _RegisterCompanyPageState extends State<RegisterCompanyPage> {
                 controller: _stateController,
                 decoration: const InputDecoration(labelText: 'Estado'),
                 validator: (value) => _validateNotEmpty(value, 'Estado'),
-              ),
-              TextFormField(
-                controller: _cepController,
-                inputFormatters: [cepMask],
-                decoration: const InputDecoration(labelText: 'CEP'),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'CEP é obrigatório';
-                  }
-                  return null;
-                },
               ),
               const SizedBox(height: 20),
               ElevatedButton(
