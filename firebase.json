@@ -1,0 +1,22 @@
+{
+    "flutter": {
+        "platforms": {
+            "android": {
+                "default": {
+                    "projectId": "fullmedcarev1",
+                    "appId": "1:932984179210:android:cba2133e12db654e2d2df3",
+                    "fileOutput": "android/app/google-services.json"
+                }
+            },
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "fullmedcarev1",
+                    "configurations": {
+                        "android": "1:932984179210:android:cba2133e12db654e2d2df3",
+                        "web": "1:932984179210:web:3240434d39b91ae32d2df3"
+                    }
+                }
+            }
+        }
+    }
+}
