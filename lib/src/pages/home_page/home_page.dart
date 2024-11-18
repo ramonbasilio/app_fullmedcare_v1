@@ -1,6 +1,7 @@
 import 'package:app_fullmedcare_v1/src/data/model/address.dart';
 import 'package:app_fullmedcare_v1/src/data/repository/search_cep.dart';
-import 'package:app_fullmedcare_v1/src/pages/register_company/register_company.dart';
+import 'package:app_fullmedcare_v1/src/pages/company/list_companies_page.dart';
+import 'package:app_fullmedcare_v1/src/pages/company/register_company_page.dart';
 import 'package:app_fullmedcare_v1/src/widgets/buttom_home_page.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +52,9 @@ class _HomePageState extends State<HomePage> {
                 ),
 
                 ButtomHomePage(
-                  func: (() {}),
+                  func: (() {
+                    Get.to(() => const ListCompaniesPage());
+                  }),
                   nameButtom: 'Empresas Cadastras',
                 ),
                 ButtomHomePage(

@@ -12,19 +12,19 @@ class Company {
   String state;
   String cep;
   String id;
-  Company({
-    required this.name,
-    required this.cnpj,
-    required this.address,
-    required this.number,
-    required this.complement,
-    required this.district,
-    required this.city,
-    required this.state,
-    required this.cep,
-    required this.id,
-  });
-
+  String date;
+  Company(
+      {required this.name,
+      required this.cnpj,
+      required this.address,
+      required this.number,
+      required this.complement,
+      required this.district,
+      required this.city,
+      required this.state,
+      required this.cep,
+      required this.id,
+      required this.date});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -38,6 +38,7 @@ class Company {
       'state': state,
       'cep': cep,
       'id': id,
+      'date': date
     };
   }
 
@@ -53,6 +54,7 @@ class Company {
       state: map['state'] as String,
       cep: map['cep'] as String,
       id: map['id'] as String,
+      date: map['date'] as String,
     );
   }
 

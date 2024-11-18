@@ -100,8 +100,8 @@ class _RegisterCompanyPageState extends State<RegisterCompanyPage> {
                       });
                     } catch (e) {
                       if (context.mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text('Erro: $e')));
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(SnackBar(content: Text('Erro: $e')));
                       }
                     }
                   }
@@ -160,13 +160,13 @@ class _RegisterCompanyPageState extends State<RegisterCompanyPage> {
                       state: _stateController.text,
                       cep: _cepController.text,
                       id: const Uuid().v1(),
+                      date: DateTime.now().toString(),
                     );
+
                     await FirebaseCloudFirestore().registerCompany(
                       company: company,
                       context: context,
                     );
-                    Future.delayed(const Duration(seconds: 2));
-                    Get.back();
                   }
                 },
                 child: const Text('Cadastrar'),
