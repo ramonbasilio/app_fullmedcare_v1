@@ -12,7 +12,10 @@ class FirebaseProvider extends GetxController {
     isLoading.value = true;
     List<Company> response = await firebaseCloudFirestore.getAllCompanies();
     if (response.isNotEmpty) {
+      response.sort((a, b) => a.name.compareTo(b.name));
       allCompanies.value = response;
+    } else {
+      allCompanies.value = [];
     }
     isLoading.value = false;
   }

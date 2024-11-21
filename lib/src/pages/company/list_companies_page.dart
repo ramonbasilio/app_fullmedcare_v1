@@ -49,26 +49,11 @@ class ListCompaniesPage extends StatelessWidget {
                                         //         .allServiceOrderCar[index]);
                                       },
                                       leading: SizedBox(
-                                        width: 250,
-                                        child: Column(
-                                          children: [
-                                            Text(
-                                              firebaseProvider
-                                                  .allCompanies[index].name,
-                                              overflow: TextOverflow.ellipsis,
-                                              softWrap: true,
-                                              style: const TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            Text(
-                                              firebaseProvider
-                                                  .allCompanies[index].cnpj,
-                                              style:
-                                                  const TextStyle(fontSize: 15),
-                                              overflow: TextOverflow.ellipsis,
-                                            )
-                                          ],
+                                        width: 80,
+                                        child: CircleAvatar(
+                                          child: Text(firebaseProvider
+                                              .allCompanies[index].name[0]
+                                              .toUpperCase()),
                                         ),
                                       ),
                                       title: TextDetails(

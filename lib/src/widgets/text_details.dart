@@ -11,6 +11,17 @@ class TextDetails extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Text(
+          company.name,
+          overflow: TextOverflow.ellipsis,
+          softWrap: true,
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        Text(
+          company.cnpj,
+          style: const TextStyle(fontSize: 15),
+          overflow: TextOverflow.ellipsis,
+        ),
         Text('${company.address}, ${company.number}, ${company.cep}'),
         Text('${company.district}, ${company.city}, ${company.state}'),
         Text('Cadastro: ${Utils.convertDate(company.date)}')

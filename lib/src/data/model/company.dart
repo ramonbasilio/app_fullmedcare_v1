@@ -62,4 +62,9 @@ class Company {
 
   factory Company.fromJson(String source) =>
       Company.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'Company(name: $name, cnpj: $cnpj, address: $address, number: $number, complement: $complement, district: $district, city: $city, state: $state, cep: $cep, id: $id, date: $date)';
+  }
 }

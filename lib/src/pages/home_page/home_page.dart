@@ -1,6 +1,8 @@
 import 'package:app_fullmedcare_v1/src/data/model/address.dart';
+import 'package:app_fullmedcare_v1/src/data/provider/firebase_provider.dart';
 import 'package:app_fullmedcare_v1/src/data/repository/search_cep.dart';
 import 'package:app_fullmedcare_v1/src/pages/company/list_companies_page.dart';
+import 'package:app_fullmedcare_v1/src/pages/company/list_companies_page_search.dart';
 import 'package:app_fullmedcare_v1/src/pages/company/register_company_page.dart';
 import 'package:app_fullmedcare_v1/src/widgets/buttom_home_page.dart';
 import 'package:dio/dio.dart';
@@ -50,16 +52,17 @@ class _HomePageState extends State<HomePage> {
                   }),
                   nameButtom: 'Cadastrar Empresas',
                 ),
-
                 ButtomHomePage(
                   func: (() {
-                    Get.to(() => const ListCompaniesPage());
+                    FirebaseProvider firebaseProvider = Get.find();
+                    firebaseProvider.getAllCompanies();
+                    Get.to(() => const ListCompaniesPageSearch());
                   }),
                   nameButtom: 'Empresas Cadastras',
                 ),
                 ButtomHomePage(
                   func: (() {}),
-                  nameButtom: 'Lista de Certificados',
+                  nameButtom: 'Certificados',
                 ),
               ],
             ),

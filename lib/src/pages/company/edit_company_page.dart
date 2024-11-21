@@ -1,19 +1,27 @@
-import 'package:app_fullmedcare_v1/src/data/model/address.dart';
-import 'package:app_fullmedcare_v1/src/data/model/company.dart';
-import 'package:app_fullmedcare_v1/src/data/repository/firebase_cloud_firestore.dart';
-import 'package:app_fullmedcare_v1/src/data/repository/search_cep.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:app_fullmedcare_v1/src/data/provider/firebase_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:uuid/uuid.dart';
 
-class RegisterCompanyPage extends StatefulWidget {
+import 'package:app_fullmedcare_v1/src/data/model/address.dart';
+import 'package:app_fullmedcare_v1/src/data/model/company.dart';
+import 'package:app_fullmedcare_v1/src/data/repository/firebase_cloud_firestore.dart';
+import 'package:app_fullmedcare_v1/src/data/repository/search_cep.dart';
+
+class EditCompanyPage extends StatefulWidget {
+  Company company;
+
+  EditCompanyPage({super.key, required this.company});
+
   @override
-  _RegisterCompanyPageState createState() => _RegisterCompanyPageState();
+  _EditCompanyPageState createState() => _EditCompanyPageState();
 }
 
-class _RegisterCompanyPageState extends State<RegisterCompanyPage> {
+class _EditCompanyPageState extends State<EditCompanyPage> {
   final _formKey = GlobalKey<FormState>();
+
   final _nameController = TextEditingController();
   final _addresscoController = TextEditingController();
   final _numberController = TextEditingController();
@@ -61,6 +69,16 @@ class _RegisterCompanyPageState extends State<RegisterCompanyPage> {
 
   @override
   Widget build(BuildContext context) {
+    _nameController.text = widget.company.name;
+    _cnpjController.text = widget.company.cnpj;
+    _cepController.text = widget.company.cep;
+    _addresscoController.text = widget.company.address;
+    _numberController.text = widget.company.number;
+    _complementController.text = widget.company.complement;
+    _districtController.text = widget.company.district;
+    _cityController.text = widget.company.city;
+    _stateController.text = widget.company.state;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cadastro de Empresa'),
@@ -124,6 +142,7 @@ class _RegisterCompanyPageState extends State<RegisterCompanyPage> {
                 validator: (value) => _validateNotEmpty(value, 'Endereço'),
               ),
               TextFormField(
+                textCapitalization: TextCapitalization.words,
                 controller: _numberController,
                 decoration: const InputDecoration(labelText: 'Número'),
                 validator: (value) => _validateNotEmpty(value, 'Número'),
@@ -165,17 +184,18 @@ class _RegisterCompanyPageState extends State<RegisterCompanyPage> {
                       city: _cityController.text.trimLeft(),
                       state: _stateController.text.trimLeft(),
                       cep: _cepController.text.trimLeft(),
-                      id: const Uuid().v1(),
+                      id: widget.company.id,
                       date: DateTime.now().toString(),
                     );
-
-                    await FirebaseCloudFirestore().registerCompany(
+                    await FirebaseCloudFirestore().uploadCompany(
                       company: company,
                       context: context,
                     );
+                    FirebaseProvider firebaseProvider = Get.find();
+                    await firebaseProvider.getAllCompanies();
                   }
                 },
-                child: const Text('Cadastrar'),
+                child: const Text('Atualizar cadastro'),
               ),
             ],
           ),
