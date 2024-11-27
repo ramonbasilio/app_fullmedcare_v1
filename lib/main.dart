@@ -1,10 +1,12 @@
 import 'package:app_fullmedcare_v1/firebase_options.dart';
 import 'package:app_fullmedcare_v1/src/data/provider/firebase_provider.dart';
+import 'package:app_fullmedcare_v1/src/data/provider/register_equipment_provider.dart';
 import 'package:app_fullmedcare_v1/src/pages/home_page/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,7 +15,12 @@ void main() async {
   );
   FirebaseProvider firebaseProvider = Get.put(FirebaseProvider());
   await firebaseProvider.getAllCompanies();
-  runApp(const MyApp());
+
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(
+      create: (context) => RegisterEquipmentProvider(),
+    ),
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

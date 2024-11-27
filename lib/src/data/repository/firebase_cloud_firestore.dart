@@ -59,35 +59,25 @@ class FirebaseCloudFirestore {
     }
   }
 
-  Future<void> uploadCompany(
+  Future<void> upDateCompany(
       {required Company company, required BuildContext context}) async {
-    bool checkingCNPJ = await checkCNPJ(company.cnpj, context);
-    if (!checkingCNPJ) {
-      try {
-        await _firebaseFirestore
-            .collection('User')
-            .doc('fullmedcare@gmail.com')
-            .collection('Companies')
-            .doc(company.id)
-            .update(company.toMap());
-        if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Cadastro atualizado com sucesso!')),
-          );
-        }
-        Get.back();
-      } on FirebaseException catch (e) {
-        if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Falha ao atualizar. Erro: $e')),
-          );
-        }
-      }
-    } else {
+    try {
+      await _firebaseFirestore
+          .collection('User')
+          .doc('fullmedcare@gmail.com')
+          .collection('Companies')
+          .doc(company.id)
+          .update(company.toMap());
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-              content: Text('CNPJ já utilizado ou salvo no banco de dados')),
+          const SnackBar(content: Text('Cadastro atualizado com sucesso!')),
+        );
+      }
+      Get.back();
+    } on FirebaseException catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Falha ao atualizar. Erro: $e')),
         );
       }
     }

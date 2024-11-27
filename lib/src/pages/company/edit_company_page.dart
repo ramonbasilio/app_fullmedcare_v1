@@ -97,6 +97,7 @@ class _EditCompanyPageState extends State<EditCompanyPage> {
                     _validateNotEmpty(value, 'Nome da empresa'),
               ),
               TextFormField(
+                enabled: false,
                 controller: _cnpjController,
                 inputFormatters: [cnpjMask],
                 decoration: const InputDecoration(labelText: 'CNPJ'),
@@ -187,7 +188,7 @@ class _EditCompanyPageState extends State<EditCompanyPage> {
                       id: widget.company.id,
                       date: DateTime.now().toString(),
                     );
-                    await FirebaseCloudFirestore().uploadCompany(
+                    await FirebaseCloudFirestore().upDateCompany(
                       company: company,
                       context: context,
                     );

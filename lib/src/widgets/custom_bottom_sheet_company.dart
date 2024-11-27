@@ -1,5 +1,6 @@
 import 'package:app_fullmedcare_v1/src/data/model/company.dart';
 import 'package:app_fullmedcare_v1/src/pages/company/edit_company_page.dart';
+import 'package:app_fullmedcare_v1/src/pages/equipment/register_equipment_page.dart';
 import 'package:app_fullmedcare_v1/src/widgets/confirmation_box.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,7 +19,10 @@ class CustomBottomSheetCompany extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.description),
             title: const Text("Gerar Certificado"),
-            onTap: () {},
+            onTap: () {
+              Get.back();
+              Get.to(()=>RegisterEquipmentPage());
+            },
           ),
           ListTile(
             leading: const Icon(Icons.edit),
