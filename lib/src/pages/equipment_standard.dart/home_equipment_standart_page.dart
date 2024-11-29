@@ -105,7 +105,7 @@ class _HomeEquipmentStandartPageState extends State<HomeEquipmentStandartPage> {
                             ? filteredEquipmentsStandard.isEmpty
                                 ? const Center(
                                     child: Text(
-                                        'Nenhum equipamento cadastrado cadastrado'),
+                                        'Nenhum equipamento localizado'),
                                   )
                                 : ListView.builder(
                                     itemCount:

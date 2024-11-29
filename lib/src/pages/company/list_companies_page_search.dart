@@ -94,6 +94,10 @@ class _ListCompaniesPageSearchState extends State<ListCompaniesPageSearch> {
                 ),
               ),
             ),
+            const SizedBox(
+              height: 10,
+            ),
+            const Divider(),
             Flexible(
               child: Obx(
                 () => firebaseProvider.isLoading.value
@@ -111,23 +115,29 @@ class _ListCompaniesPageSearchState extends State<ListCompaniesPageSearch> {
                                 : ListView.builder(
                                     itemCount: filteredCompanies.length,
                                     itemBuilder: (context, index) {
-                                      return ListTile(
-                                          onTap: () {
-                                            _showCustomBottomSheet(context,
-                                                filteredCompanies[index]);
-                                          },
-                                          leading: SizedBox(
-                                            width: 80,
-                                            child: CircleAvatar(
-                                              child: Text(
-                                                  filteredCompanies[index]
-                                                      .name[0]
-                                                      .toUpperCase()),
+                                      return Column(
+                                        children: [
+                                          ListTile(
+                                            onTap: () {
+                                              _showCustomBottomSheet(context,
+                                                  filteredCompanies[index]);
+                                            },
+                                            leading: SizedBox(
+                                              width: 80,
+                                              child: CircleAvatar(
+                                                child: Text(
+                                                    filteredCompanies[index]
+                                                        .name[0]
+                                                        .toUpperCase()),
+                                              ),
+                                            ),
+                                            title: TextDetails(
+                                              company: filteredCompanies[index],
                                             ),
                                           ),
-                                          title: TextDetails(
-                                            company: filteredCompanies[index],
-                                          ));
+                                          const Divider()
+                                        ],
+                                      );
                                     },
                                   )
                             : ListView.builder(
