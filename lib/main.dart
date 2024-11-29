@@ -15,6 +15,7 @@ void main() async {
   );
   FirebaseProvider firebaseProvider = Get.put(FirebaseProvider());
   await firebaseProvider.getAllCompanies();
+  await firebaseProvider.getAllEquipmentsStandard();
 
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(

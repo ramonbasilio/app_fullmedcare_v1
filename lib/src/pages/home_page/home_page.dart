@@ -1,11 +1,8 @@
-import 'package:app_fullmedcare_v1/src/data/model/address.dart';
 import 'package:app_fullmedcare_v1/src/data/provider/firebase_provider.dart';
-import 'package:app_fullmedcare_v1/src/data/repository/search_cep.dart';
-import 'package:app_fullmedcare_v1/src/pages/company/list_companies_page.dart';
 import 'package:app_fullmedcare_v1/src/pages/company/list_companies_page_search.dart';
 import 'package:app_fullmedcare_v1/src/pages/company/register_company_page.dart';
+import 'package:app_fullmedcare_v1/src/pages/equipment_standard.dart/home_equipment_standart_page.dart';
 import 'package:app_fullmedcare_v1/src/widgets/buttom_home_page.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -50,7 +47,7 @@ class _HomePageState extends State<HomePage> {
                   func: (() {
                     Get.to(() => RegisterCompanyPage());
                   }),
-                  nameButtom: 'Cadastrar Empresas',
+                  nameButtom: 'Cadastrar Empresa',
                 ),
                 ButtomHomePage(
                   func: (() {
@@ -59,6 +56,12 @@ class _HomePageState extends State<HomePage> {
                     Get.to(() => const ListCompaniesPageSearch());
                   }),
                   nameButtom: 'Empresas Cadastras',
+                ),
+                ButtomHomePage(
+                  func: (() {
+                    Get.to(() => const HomeEquipmentStandartPage());
+                  }),
+                  nameButtom: 'Equipamentos Padrão',
                 ),
                 ButtomHomePage(
                   func: (() {}),
