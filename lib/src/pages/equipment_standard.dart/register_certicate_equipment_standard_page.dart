@@ -1,4 +1,5 @@
 import 'package:app_fullmedcare_v1/src/utils/utils.dart';
+import 'package:app_fullmedcare_v1/src/widgets/button_navbar.dart';
 import 'package:date_picker_plus/date_picker_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -26,6 +27,12 @@ class _RegisterCerticateEquipmentStandardPageState
 
   @override
   Widget build(BuildContext context) {
+    List<TextEditingController> listController = [
+      _issuerController,
+      _numberCertificateController,
+      _dateOfIssueController,
+      _dateExpirationController,
+    ];
     return Scaffold(
       appBar: AppBar(
         title:
@@ -34,176 +41,178 @@ class _RegisterCerticateEquipmentStandardPageState
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: Form(
-            key: _formKey,
-            child: ListView(
-              children: [
-                const Center(
-                  child: Text(
-                    'Dados do Certificado',
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    const SizedBox(width: 200, child: Text('Emissor')),
-                    SizedBox(
-                      width: 500,
-                      child: TextFormField(
-                        controller: _issuerController,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Digite o emissor do certificado';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    const SizedBox(
-                        width: 200, child: Text('Número do certificado')),
-                    SizedBox(
-                      width: 500,
-                      child: TextFormField(
-                        controller: _numberCertificateController,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Digite o número do certificado';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    const SizedBox(width: 200, child: Text('Data de emissão')),
-                    SizedBox(
-                      width: 250,
-                      child: TextFormField(
-                        textAlign: TextAlign.center,
-                        readOnly: true,
-                        onTap: (() async {
-                          final date = await showDatePickerDialog(
-                            context: context,
-                            minDate: DateTime(2020, 1, 1),
-                            maxDate: DateTime.now(),
-                          );
-
-                        }),
-                        inputFormatters: [dateMask],
-                        controller: _dateOfIssueController,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Digite a data de emissão';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    const SizedBox(width: 200, child: Text('Data de validade')),
-                    SizedBox(
-                      width: 250,
-                      child: TextFormField(
-                        textAlign: TextAlign.center,
-                        readOnly: true,
-                        onTap: (() async {
-                          final date = await showDatePickerDialog(
-                            context: context,
-                            minDate: DateTime.now(),
-                            maxDate: DateTime(2026, 1, 1),
-                          );
-                          setState(() {
-                            if (date != null) {
-                              String result =
-                                  Utils.convertDate(date.toIso8601String());
-                              _dateExpirationController.text = result;
-                            }
-                          });
-                        }),
-                        inputFormatters: [dateMask],
-                        controller: _dateExpirationController,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Digite a data de validade';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Divider(),
-                )
-              ],
-            )),
-      ),
-      bottomNavigationBar: SizedBox(
-        height: 120,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                SizedBox(
-                  height: 60,
-                  width: 250,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {}
-                      },
-                      child: const Text('Salvar')),
-                ),
-                SizedBox(
-                  height: 60,
-                  width: 250,
-                  child: ElevatedButton(
-                      onPressed: () {}, child: const Text('Limpar')),
-                ),
-              ],
-            ),
+            formRegisterInfo(context),
+            const Text('demais dados')
           ],
         ),
       ),
+      bottomNavigationBar: ButtonNavBar(
+        formKey: _formKey,
+        listController: listController,
+      ),
     );
   }
+
+  Form formRegisterInfo(BuildContext context) {
+    return Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            const Center(
+              child: Text(
+                'Dados do Certificado',
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                const SizedBox(width: 200, child: Text('Emissor')),
+                SizedBox(
+                  width: 500,
+                  child: TextFormField(
+                    controller: _issuerController,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Digite o emissor do certificado';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                const SizedBox(
+                    width: 200, child: Text('Número do certificado')),
+                SizedBox(
+                  width: 500,
+                  child: TextFormField(
+                    controller: _numberCertificateController,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Digite o número do certificado';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                const SizedBox(width: 200, child: Text('Data de emissão')),
+                SizedBox(
+                  width: 250,
+                  child: TextFormField(
+                    textAlign: TextAlign.center,
+                    readOnly: true,
+                    onTap: (() async {
+                      final date = await showDatePickerDialog(
+                        context: context,
+                        minDate: DateTime(2020, 1, 1),
+                        maxDate: DateTime.now(),
+                      );
+                      if (date != null && context.mounted) {
+                        setState(() {
+                          String result =
+                              Utils.convertDate(date.toIso8601String());
+                          _dateOfIssueController.text = result;
+                        });
+                      }
+                    }),
+                    inputFormatters: [dateMask],
+                    controller: _dateOfIssueController,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Digite a data de emissão';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                const SizedBox(width: 200, child: Text('Data de validade')),
+                SizedBox(
+                  width: 250,
+                  child: TextFormField(
+                    textAlign: TextAlign.center,
+                    readOnly: true,
+                    onTap: (() async {
+                      final date = await showDatePickerDialog(
+                        context: context,
+                        minDate: DateTime.now(),
+                        maxDate: DateTime(2100, 1, 1),
+                      );
+                      if (date != null && context.mounted) {
+                        int differenceInDays =
+                            DateTime.now().difference(date).inDays.abs();
+                        String result =
+                            Utils.convertDate(date.toIso8601String());
+                        _dateExpirationController.text = result;
+                        if (differenceInDays < 30) {
+                          setState(() {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text(
+                                      'Atenção, certificado próximo da validade')),
+                            );
+                          });
+                        }
+                      }
+                    }),
+                    inputFormatters: [dateMask],
+                    controller: _dateExpirationController,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Digite a data de validade';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Divider(),
+            )
+          ],
+        ));
+  }
 }
+
+
