@@ -14,7 +14,7 @@ class RegisterDataCertificatePage extends StatelessWidget {
         children: [
           ElevatedButton(onPressed: ((){
             Get.back();
-          }), child: Text('Voltar'))
+          }), child: const Text('Voltar'))
         ],
       ),
     );

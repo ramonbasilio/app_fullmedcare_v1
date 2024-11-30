@@ -1,10 +1,8 @@
-import 'package:app_fullmedcare_v1/src/data/model/company.dart';
 import 'package:app_fullmedcare_v1/src/data/model/standar_equipment.dart';
-import 'package:app_fullmedcare_v1/src/pages/company/edit_company_page.dart';
-import 'package:app_fullmedcare_v1/src/pages/equipment/register_equipment_page.dart';
-import 'package:app_fullmedcare_v1/src/widgets/confirmation_box.dart';
+import 'package:app_fullmedcare_v1/src/pages/equipment_standard.dart/list_certificate_equipment_standard_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 
 class CustomBottomSheetEquipmentStardad extends StatelessWidget {
   final EquipmentStandard equipmentStandard;
@@ -21,8 +19,8 @@ class CustomBottomSheetEquipmentStardad extends StatelessWidget {
             leading: const Icon(Icons.description),
             title: const Text("Inserir Certificado Rastreabilidade"),
             onTap: () {
-              // Get.back();
-              // Get.to(()=>RegisterEquipmentPage());
+              Get.back();
+              Get.to(()=>const ListCertificateEquipmentStandardPage());
             },
           ),
           ListTile(

@@ -3,7 +3,6 @@ import 'package:app_fullmedcare_v1/src/data/model/company.dart';
 import 'package:app_fullmedcare_v1/src/data/repository/firebase_cloud_firestore.dart';
 import 'package:app_fullmedcare_v1/src/data/repository/search_cep.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:uuid/uuid.dart';
 
