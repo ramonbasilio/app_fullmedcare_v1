@@ -1,8 +1,10 @@
+import 'package:app_fullmedcare_v1/src/data/provider/points_measur_provider.dart';
 import 'package:app_fullmedcare_v1/src/utils/utils.dart';
 import 'package:app_fullmedcare_v1/src/widgets/button_navbar.dart';
 import 'package:date_picker_plus/date_picker_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:provider/provider.dart';
 
 class RegisterCerticateEquipmentStandardPage extends StatefulWidget {
   const RegisterCerticateEquipmentStandardPage({super.key});
@@ -43,6 +45,8 @@ class _RegisterCerticateEquipmentStandardPageState
     List<TextEditingController> listController2 = [
       _unitController, _pointController, _vvcController, _uncertaintyController, _kValueController
     ];
+
+    PointsMeasurProvider pointsMeasurProvider = Provider.of<PointsMeasurProvider>(context, listen: false);
     
     return Scaffold(
       appBar: AppBar(
@@ -356,7 +360,10 @@ class _RegisterCerticateEquipmentStandardPageState
                   width: 10,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    
+
+                  },
                   child: const Icon(Icons.add),
                 ),
                          const SizedBox(

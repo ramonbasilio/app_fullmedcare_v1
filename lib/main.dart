@@ -1,5 +1,6 @@
 import 'package:app_fullmedcare_v1/firebase_options.dart';
 import 'package:app_fullmedcare_v1/src/data/provider/firebase_provider.dart';
+import 'package:app_fullmedcare_v1/src/data/provider/points_measur_provider.dart';
 import 'package:app_fullmedcare_v1/src/data/provider/register_equipment_provider.dart';
 import 'package:app_fullmedcare_v1/src/pages/equipment_standard.dart/register_certicate_equipment_standard_page.dart';
 import 'package:app_fullmedcare_v1/src/pages/home_page/home_page.dart';
@@ -19,9 +20,8 @@ void main() async {
   await firebaseProvider.getAllEquipmentsStandard();
 
   runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(
-      create: (context) => RegisterEquipmentProvider(),
-    ),
+    ChangeNotifierProvider(create: (context) => RegisterEquipmentProvider()),
+    ChangeNotifierProvider(create: (context) => PointsMeasurProvider()),
   ], child: const MyApp()));
 }
 
@@ -31,7 +31,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-
       debugShowCheckedModeBanner: false,
       title: 'Fullmedcare V1',
       theme: ThemeData(
@@ -41,8 +40,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MediaQuery(
             data: MediaQuery.of(context)
-                .copyWith(textScaler: const TextScaler.linear(1.3)
-                    ),
+                .copyWith(textScaler: const TextScaler.linear(1.3)),
             child: child!);
       },
       home: const RegisterCerticateEquipmentStandardPage(),
