@@ -15,12 +15,19 @@ class RegisterCerticateEquipmentStandardPage extends StatefulWidget {
 class _RegisterCerticateEquipmentStandardPageState
     extends State<RegisterCerticateEquipmentStandardPage> {
   final _formKey = GlobalKey<FormState>();
+  final _formKey2 = GlobalKey<FormState>();
+
   final TextEditingController _issuerController = TextEditingController();
   final TextEditingController _numberCertificateController =
       TextEditingController();
   final TextEditingController _dateOfIssueController = TextEditingController();
   final TextEditingController _dateExpirationController =
       TextEditingController();
+  final TextEditingController _unitController = TextEditingController();
+  final TextEditingController _pointController = TextEditingController();
+  final TextEditingController _vvcController = TextEditingController();
+  final TextEditingController _uncertaintyController = TextEditingController();
+  final TextEditingController _kValueController = TextEditingController();
 
   final dateMask =
       MaskTextInputFormatter(initialText: '##/##/####', mask: '##/##/####');
@@ -33,6 +40,10 @@ class _RegisterCerticateEquipmentStandardPageState
       _dateOfIssueController,
       _dateExpirationController,
     ];
+    List<TextEditingController> listController2 = [
+      _unitController, _pointController, _vvcController, _uncertaintyController, _kValueController
+    ];
+    
     return Scaffold(
       appBar: AppBar(
         title:
@@ -44,8 +55,8 @@ class _RegisterCerticateEquipmentStandardPageState
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            formRegisterInfo(context),
-            const Text('demais dados')
+            formRegisterInfo(),
+            formRegistermMasuringPoints(listController2)
           ],
         ),
       ),
@@ -56,7 +67,7 @@ class _RegisterCerticateEquipmentStandardPageState
     );
   }
 
-  Form formRegisterInfo(BuildContext context) {
+  Form formRegisterInfo() {
     return Form(
         key: _formKey,
         child: Column(
@@ -213,6 +224,158 @@ class _RegisterCerticateEquipmentStandardPageState
           ],
         ));
   }
+
+  Form formRegistermMasuringPoints(List<TextEditingController> listController2) {
+    return Form(
+      key: _formKey2,
+      child: Column(
+        children: [
+          const Text(
+            'Pontos de Medição',
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(
+            height: 120,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Column(
+                  children: [
+                    const Text('Unidade:'),
+                    SizedBox(
+                      width: 150,
+                      child: TextFormField(
+                        controller: _unitController,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Digite o emissor do certificado';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Column(
+                  children: [
+                    const Text('Ponto:'),
+                    SizedBox(
+                      width: 100,
+                      child: TextFormField(
+                        controller: _pointController,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Digite o emissor do certificado';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Column(
+                  children: [
+                    const Text('VVC:'),
+                    SizedBox(
+                      width: 100,
+                      child: TextFormField(
+                        controller: _vvcController,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Digite o emissor do certificado';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Column(
+                  children: [
+                    const Text('Incerteza:'),
+                    SizedBox(
+                      width: 100,
+                      child: TextFormField(
+                        controller: _uncertaintyController,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Digite o emissor do certificado';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Column(
+                  children: [
+                    const Text('K:'),
+                    SizedBox(
+                      width: 50,
+                      child: TextFormField(
+                        controller: _kValueController,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Digite o emissor do certificado';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                ElevatedButton(
+                  onPressed: () {},
+                  child: const Icon(Icons.add),
+                ),
+                         const SizedBox(
+                  width: 10,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    for (var x in listController2) {
+                      x.clear();
+                    }
+
+                  },
+                  child: const Text('Limpar'),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
 }
-
-
