@@ -1,5 +1,6 @@
+import 'package:app_fullmedcare_v1/src/data/model/certificate_equipment_stantard.dart';
 import 'package:app_fullmedcare_v1/src/data/model/company.dart';
-import 'package:app_fullmedcare_v1/src/data/model/standar_equipment.dart';
+import 'package:app_fullmedcare_v1/src/data/model/equipment_stardard.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -150,7 +151,7 @@ class FirebaseCloudFirestore {
     }
   }
 
-    Future<List<EquipmentStandard>> getAllEquipmentsStandard() async {
+  Future<List<EquipmentStandard>> getAllEquipmentsStandard() async {
     List<EquipmentStandard> listEquipmentsStandard = [];
     await _firebaseFirestore
         .collection('User')
@@ -160,10 +161,63 @@ class FirebaseCloudFirestore {
         .then((querySnapshot) {
       for (var docSnapshot in querySnapshot.docs) {
         if (docSnapshot.data().isNotEmpty) {
-          listEquipmentsStandard.add(EquipmentStandard.fromMap(docSnapshot.data()));
+          listEquipmentsStandard
+              .add(EquipmentStandard.fromMap(docSnapshot.data()));
         }
       }
     });
     return listEquipmentsStandard;
+  }
+
+  Future<void> registerCertificateEquipmentStandard(
+      {required CertificateEquipmentStandard certificateEquipmentStandard,
+      required String equipmentStardadId,
+      required BuildContext context}) async {
+    try {
+      await _firebaseFirestore
+          .collection('User')
+          .doc('fullmedcare@gmail.com')
+          .collection('Equipment_Standard')
+          .doc(equipmentStardadId)
+          .collection('Certificates')
+          .doc(certificateEquipmentStandard.id)
+          .set(certificateEquipmentStandard.toMap());
+
+          
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Cadastro realizado com sucesso!')),
+        );
+      }
+      Get.back();
+    } on FirebaseException catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Falha ao salvar. Erro: $e')),
+        );
+      }
+    }
+  }
+
+  Future<List<CertificateEquipmentStandard>>
+      getAllCertificateEquipmentStandard(
+          String equipmentStardadId) async {
+    List<CertificateEquipmentStandard> listCertificateEquipmentStandard = [];
+    await _firebaseFirestore
+        .collection('User')
+        .doc('fullmedcare@gmail.com')
+        .collection('Equipment_Standard')
+        .doc(equipmentStardadId)
+        .collection('Certificates')
+        .get()
+        .then((querySnapshot) {
+      for (var docSnapshot in querySnapshot.docs) {
+        if (docSnapshot.data().isNotEmpty) {
+          listCertificateEquipmentStandard
+              .add(CertificateEquipmentStandard.fromMap(docSnapshot.data()));
+        }
+      }
+    });
+    return listCertificateEquipmentStandard;
   }
 }

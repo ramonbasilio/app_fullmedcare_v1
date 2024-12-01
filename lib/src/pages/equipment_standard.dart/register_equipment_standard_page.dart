@@ -1,4 +1,4 @@
-import 'package:app_fullmedcare_v1/src/data/model/standar_equipment.dart';
+import 'package:app_fullmedcare_v1/src/data/model/equipment_stardard.dart';
 import 'package:app_fullmedcare_v1/src/data/provider/firebase_provider.dart';
 import 'package:app_fullmedcare_v1/src/data/repository/firebase_cloud_firestore.dart';
 import 'package:flutter/material.dart';

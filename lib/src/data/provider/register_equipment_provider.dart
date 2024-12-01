@@ -16,6 +16,7 @@ class RegisterEquipmentProvider extends ChangeNotifier {
   String get tag => _tag;
   String get department => _department;
 
+
   void registerFields(Equipment equipment) {
     _type = equipment.type;
     _model = equipment.model;

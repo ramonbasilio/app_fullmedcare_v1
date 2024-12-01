@@ -1,4 +1,4 @@
-import 'package:app_fullmedcare_v1/src/data/model/standar_equipment.dart';
+import 'package:app_fullmedcare_v1/src/data/model/equipment_stardard.dart';
 import 'package:flutter/material.dart';
 
 class TextDetails2 extends StatelessWidget {
