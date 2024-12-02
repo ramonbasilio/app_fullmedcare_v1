@@ -2,6 +2,7 @@ import 'package:app_fullmedcare_v1/src/data/model/equipment_stardard.dart';
 import 'package:app_fullmedcare_v1/src/data/provider/firebase_provider.dart';
 import 'package:app_fullmedcare_v1/src/data/repository/firebase_cloud_firestore.dart';
 import 'package:app_fullmedcare_v1/src/pages/equipment_standard.dart/register_equipment_standard_page.dart';
+import 'package:app_fullmedcare_v1/src/pages/home_page/home_page.dart';
 import 'package:app_fullmedcare_v1/src/widgets/custom_bottom_sheet_equipment_stardad.dart';
 import 'package:app_fullmedcare_v1/src/widgets/text_details_2.dart';
 import 'package:flutter/material.dart';
@@ -53,6 +54,11 @@ class _HomeEquipmentStandartPageState extends State<HomeEquipmentStandartPage> {
       appBar: AppBar(
         title: const Text('Equipamento Padrão'),
         centerTitle: true,
+        leading: BackButton(
+          onPressed: () {
+            Get.off(() => HomePage());
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),

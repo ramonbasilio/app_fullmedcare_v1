@@ -11,6 +11,7 @@ analyzer:
   errors:
     library_private_types_in_public_api: ignore
     must_be_immutable: ignore
+    no_leading_underscores_for_local_identifiers: ignore
     unused_field: ignore
     use_key_in_widget_constructors: ignore
 include: package:flutter_lints/flutter.yaml

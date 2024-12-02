@@ -1,5 +1,6 @@
 import 'package:app_fullmedcare_v1/src/data/model/equipment_stardard.dart';
 import 'package:app_fullmedcare_v1/src/data/provider/firebase_provider.dart';
+import 'package:app_fullmedcare_v1/src/data/provider/register_equipment_provider.dart';
 import 'package:app_fullmedcare_v1/src/pages/equipment_standard.dart/list_certificate_equipment_standard_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,6 +14,8 @@ class CustomBottomSheetEquipmentStardad extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     FirebaseProvider firebaseProvider = Get.find();
+    RegisterEquipmentProvider registerEquipmentProvider =
+        Provider.of(context, listen: false);
     return Container(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -24,8 +27,9 @@ class CustomBottomSheetEquipmentStardad extends StatelessWidget {
             onTap: () async {
               firebaseProvider
                   .getAllCertificateEquipmentStandard(equipmentStandard.id);
+              registerEquipmentProvider.registerEquipment(equipmentStandard);
               Get.back();
-              Get.to(() => ListCertificateEquipmentStandardPage(
+              Get.off(() => ListCertificateEquipmentStandardPage(
                     equipmentStandard: equipmentStandard,
                   ));
             },

@@ -189,7 +189,7 @@ class FirebaseCloudFirestore {
           const SnackBar(content: Text('Cadastro realizado com sucesso!')),
         );
       }
-      Get.back();
+      //Get.back();
     } on FirebaseException catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

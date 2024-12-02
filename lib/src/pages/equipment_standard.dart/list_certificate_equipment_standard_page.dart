@@ -1,6 +1,7 @@
 import 'package:app_fullmedcare_v1/src/data/model/equipment_stardard.dart';
 import 'package:app_fullmedcare_v1/src/data/provider/firebase_provider.dart';
 import 'package:app_fullmedcare_v1/src/data/provider/points_measur_provider.dart';
+import 'package:app_fullmedcare_v1/src/pages/equipment_standard.dart/home_equipment_standart_page.dart';
 import 'package:app_fullmedcare_v1/src/pages/equipment_standard.dart/register_certicate_equipment_standard_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,6 +20,9 @@ class ListCertificateEquipmentStandardPage extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Certificados de calibração - Equipamento Padrão'),
           centerTitle: true,
+          leading: BackButton(onPressed: () {
+            Get.off(()=>HomeEquipmentStandartPage());
+          },),
         ),
         body: Padding(
           padding: const EdgeInsets.all(20.0),

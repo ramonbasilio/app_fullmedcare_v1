@@ -1,7 +1,10 @@
 import 'package:app_fullmedcare_v1/src/data/model/certificate_equipment_stantard.dart';
+import 'package:app_fullmedcare_v1/src/data/model/equipment_stardard.dart';
 import 'package:app_fullmedcare_v1/src/data/provider/firebase_provider.dart';
 import 'package:app_fullmedcare_v1/src/data/provider/points_measur_provider.dart';
+import 'package:app_fullmedcare_v1/src/data/provider/register_equipment_provider.dart';
 import 'package:app_fullmedcare_v1/src/data/repository/firebase_cloud_firestore.dart';
+import 'package:app_fullmedcare_v1/src/pages/equipment_standard.dart/list_certificate_equipment_standard_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -19,11 +22,17 @@ class ButtonNavBar extends StatelessWidget {
     required this.listController,
   });
 
+  late EquipmentStandard equipmentStandard;
+
   @override
   Widget build(BuildContext context) {
     FirebaseProvider firebaseProvider = Get.find();
     PointsMeasurProvider pointsMeasurProvider =
         Provider.of<PointsMeasurProvider>(context, listen: false);
+    RegisterEquipmentProvider registerEquipmentProvider =
+        Provider.of(context, listen: false);
+
+    equipmentStandard = registerEquipmentProvider.equipmentStandard[0];
 
     return SizedBox(
       height: 80,
@@ -55,7 +64,13 @@ class ButtonNavBar extends StatelessWidget {
                             context: context);
                     firebaseProvider
                         .getAllCertificateEquipmentStandard(equipmentStardadId);
-                    Get.back();
+
+                    //Get.back();
+
+                    Get.off(() => ListCertificateEquipmentStandardPage(
+    
+                          equipmentStandard: equipmentStandard,
+                        ));
                   }
                 },
                 child: const Text(

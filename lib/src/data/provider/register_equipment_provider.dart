@@ -1,4 +1,5 @@
 import 'package:app_fullmedcare_v1/src/data/model/equipment.dart';
+import 'package:app_fullmedcare_v1/src/data/model/equipment_stardard.dart';
 import 'package:flutter/material.dart';
 
 class RegisterEquipmentProvider extends ChangeNotifier {
@@ -8,6 +9,7 @@ class RegisterEquipmentProvider extends ChangeNotifier {
   String _ns = '';
   String _tag = '';
   String _department = '';
+  List<EquipmentStandard> _equipmentStandard = [];
 
   String get type => _type;
   String get model => _model;
@@ -15,7 +17,7 @@ class RegisterEquipmentProvider extends ChangeNotifier {
   String get ns => _ns;
   String get tag => _tag;
   String get department => _department;
-
+  List<EquipmentStandard> get equipmentStandard => _equipmentStandard;
 
   void registerFields(Equipment equipment) {
     _type = equipment.type;
@@ -24,6 +26,11 @@ class RegisterEquipmentProvider extends ChangeNotifier {
     _ns = equipment.ns;
     _tag = equipment.tag;
     _department = equipment.department;
+    notifyListeners();
+  }
+
+  void registerEquipment(EquipmentStandard equipment) {
+    _equipmentStandard.add(equipment);
     notifyListeners();
   }
 }
