@@ -174,7 +174,7 @@ class _RegisterCompanyPageState extends State<RegisterCompanyPage> {
                     );
                   }
                 },
-                child: const Text('Cadastrar'),
+                child: const Text('Cadastrar.'),
               ),
             ],
           ),
