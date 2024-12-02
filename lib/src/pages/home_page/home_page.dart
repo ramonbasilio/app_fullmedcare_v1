@@ -1,7 +1,7 @@
 import 'package:app_fullmedcare_v1/src/data/provider/firebase_provider.dart';
 import 'package:app_fullmedcare_v1/src/pages/company/list_companies_page_search.dart';
 import 'package:app_fullmedcare_v1/src/pages/company/register_company_page.dart';
-import 'package:app_fullmedcare_v1/src/pages/equipment_standard.dart/home_equipment_standart_page.dart';
+import 'package:app_fullmedcare_v1/src/pages/equipment_standard.dart/list_equipment_standart_page.dart';
 import 'package:app_fullmedcare_v1/src/routes/name_routes.dart';
 import 'package:app_fullmedcare_v1/src/widgets/buttom_home_page.dart';
 import 'package:flutter/material.dart';

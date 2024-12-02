@@ -8,15 +8,15 @@ import 'package:app_fullmedcare_v1/src/widgets/text_details_2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class HomeEquipmentStandartPage extends StatefulWidget {
-  const HomeEquipmentStandartPage({super.key});
+class ListEquipmentStandartPage extends StatefulWidget {
+  const ListEquipmentStandartPage({super.key});
 
   @override
-  State<HomeEquipmentStandartPage> createState() =>
-      _HomeEquipmentStandartPageState();
+  State<ListEquipmentStandartPage> createState() =>
+      _ListEquipmentStandartPageState();
 }
 
-class _HomeEquipmentStandartPageState extends State<HomeEquipmentStandartPage> {
+class _ListEquipmentStandartPageState extends State<ListEquipmentStandartPage> {
   FirebaseProvider firebaseProvider = Get.find();
   List<EquipmentStandard> filteredEquipmentsStandard = [];
   String _query = '';
@@ -56,7 +56,7 @@ class _HomeEquipmentStandartPageState extends State<HomeEquipmentStandartPage> {
         centerTitle: true,
         leading: BackButton(
           onPressed: () {
-            Get.off(() => HomePage());
+            Get.offAll(() => HomePage());
           },
         ),
       ),
