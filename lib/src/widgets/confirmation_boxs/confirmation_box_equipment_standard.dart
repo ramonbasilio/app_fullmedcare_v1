@@ -1,0 +1,45 @@
+import 'package:app_fullmedcare_v1/src/data/model/company.dart';
+import 'package:app_fullmedcare_v1/src/data/model/equipment_stardard.dart';
+import 'package:app_fullmedcare_v1/src/data/provider/firebase_provider.dart';
+import 'package:app_fullmedcare_v1/src/data/repository/firebase_cloud_firestore.dart';
+import 'package:app_fullmedcare_v1/src/pages/company/list_companies_page_search.dart';
+import 'package:app_fullmedcare_v1/src/pages/equipment_standard.dart/list_equipment_standart_page.dart';
+import 'package:app_fullmedcare_v1/src/routes/name_routes.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+class ConfirmationDeleteEquipmentStandard {
+  Future<void> confirmationDeleteEquipmentStandard(
+      BuildContext context, EquipmentStandard equipmentStandard) async {
+    return showDialog<void>(
+        context: context,
+        barrierDismissible: false, 
+        builder: (BuildContext dialogContext) {
+          return AlertDialog(
+            title: const Text('Confirmar exclusão'),
+            content:
+                const Text('Você tem certeza que deseja excluir este registro?'),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Cancelar'),
+                onPressed: () {
+                  Get.back(); 
+                },
+              ),
+              TextButton(
+                child: const Text('Excluir'),
+                onPressed: () async {
+                  await FirebaseCloudFirestore().deleteEquipmentStandard(
+                    equipmentStandard: equipmentStandard,
+                    context: context,
+                  );
+                  FirebaseProvider firebaseProvider = Get.find();
+                  await firebaseProvider.getAllEquipmentsStandard();
+                  Get.toNamed(NameRoutes.listEquipmentStandard);
+                },
+              ),
+            ],
+          );
+        });
+  }
+}

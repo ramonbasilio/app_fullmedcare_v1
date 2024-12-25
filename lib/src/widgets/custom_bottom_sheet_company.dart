@@ -1,7 +1,7 @@
 import 'package:app_fullmedcare_v1/src/data/model/company.dart';
 import 'package:app_fullmedcare_v1/src/pages/company/edit_company_page.dart';
 import 'package:app_fullmedcare_v1/src/pages/equipment/register_equipment_page.dart';
-import 'package:app_fullmedcare_v1/src/widgets/confirmation_box.dart';
+import 'package:app_fullmedcare_v1/src/widgets/confirmation_boxs/confirmation_box_company.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -39,7 +39,7 @@ class CustomBottomSheetCompany extends StatelessWidget {
             title: const Text("Deletar"),
             onTap: () {
               Get.back();
-              ConfirmationDeleteRegister().showConfirmationDialog(context, company);
+              ConfirmationDeleteCompany().confirmationDeleteCompany(context, company);
             },
           ),
         ],

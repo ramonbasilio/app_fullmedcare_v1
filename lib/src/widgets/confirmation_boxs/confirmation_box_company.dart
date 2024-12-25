@@ -5,8 +5,8 @@ import 'package:app_fullmedcare_v1/src/pages/company/list_companies_page_search.
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ConfirmationDeleteRegister {
-  Future<void> showConfirmationDialog(
+class ConfirmationDeleteCompany {
+  Future<void> confirmationDeleteCompany(
       BuildContext context, Company company) async {
     return showDialog<void>(
         context: context,

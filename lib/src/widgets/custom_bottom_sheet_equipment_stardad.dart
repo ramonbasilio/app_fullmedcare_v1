@@ -4,6 +4,8 @@ import 'package:app_fullmedcare_v1/src/data/provider/register_equipment_provider
 import 'package:app_fullmedcare_v1/src/pages/equipment_standard.dart/edit_equipment_standard_page.dart';
 import 'package:app_fullmedcare_v1/src/pages/equipment_standard.dart/list_certificate_equipment_standard_page.dart';
 import 'package:app_fullmedcare_v1/src/routes/name_routes.dart';
+import 'package:app_fullmedcare_v1/src/widgets/confirmation_boxs/confirmation_box_company.dart';
+import 'package:app_fullmedcare_v1/src/widgets/confirmation_boxs/confirmation_box_equipment_standard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -41,17 +43,19 @@ class CustomBottomSheetEquipmentStardad extends StatelessWidget {
             title: const Text("Editar Equipamento"),
             onTap: () {
               Get.back();
-              Get.toNamed(NameRoutes.editEquipmentStandard, arguments: equipmentStandard);
+              Get.toNamed(NameRoutes.editEquipmentStandard,
+                  arguments: equipmentStandard);
             },
           ),
           ListTile(
-            leading: const Icon(Icons.delete),
-            title: const Text("Deletar Equipamento"),
-            onTap: () {
-              Get.back();
-              // Confirmationwidget().showConfirmationDialog(context, company);
-            },
-          ),
+              leading: const Icon(Icons.delete),
+              title: const Text("Deletar Equipamento"),
+              onTap: () {
+                Get.back();
+                ConfirmationDeleteEquipmentStandard()
+                    .confirmationDeleteEquipmentStandard(
+                        context, equipmentStandard);
+              }),
         ],
       ),
     );

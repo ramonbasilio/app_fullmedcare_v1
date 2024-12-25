@@ -183,7 +183,6 @@ class FirebaseCloudFirestore {
           .doc(certificateEquipmentStandard.id)
           .set(certificateEquipmentStandard.toMap());
 
-          
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Cadastro realizado com sucesso!')),
@@ -199,9 +198,8 @@ class FirebaseCloudFirestore {
     }
   }
 
-  Future<List<CertificateEquipmentStandard>>
-      getAllCertificateEquipmentStandard(
-          String equipmentStardadId) async {
+  Future<List<CertificateEquipmentStandard>> getAllCertificateEquipmentStandard(
+      String equipmentStardadId) async {
     List<CertificateEquipmentStandard> listCertificateEquipmentStandard = [];
     await _firebaseFirestore
         .collection('User')
@@ -221,8 +219,9 @@ class FirebaseCloudFirestore {
     return listCertificateEquipmentStandard;
   }
 
-    Future<void> upDateEquipmentStandard(
-      {required EquipmentStandard equipmentStandard, required BuildContext context}) async {
+  Future<void> upDateEquipmentStandard(
+      {required EquipmentStandard equipmentStandard,
+      required BuildContext context}) async {
     try {
       await _firebaseFirestore
           .collection('User')
@@ -245,15 +244,27 @@ class FirebaseCloudFirestore {
     }
   }
 
-    Future<void> deleteEquipmentStandard(
-      {required EquipmentStandard equipmentStandard, required BuildContext context}) async {
+  Future<void> deleteEquipmentStandard(
+      {required EquipmentStandard equipmentStandard,
+      required BuildContext context}) async {
     try {
+      final collectionRef = FirebaseFirestore.instance
+          .collection('User')
+          .doc('fullmedcare@gmail.com')
+          .collection('Equipment_Standard');
+
+      final querySnapshot = await collectionRef.get();
+      for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+        await doc.reference.delete();
+      }
+
       await _firebaseFirestore
           .collection('User')
           .doc('fullmedcare@gmail.com')
           .collection('Equipment_Standard')
           .doc(equipmentStandard.id)
           .delete();
+          
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Cadastro excluído com sucesso!')),
