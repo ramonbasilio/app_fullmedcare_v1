@@ -5,7 +5,7 @@ import 'package:app_fullmedcare_v1/src/pages/company/list_companies_page_search.
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Confirmationwidget {
+class ConfirmationDeleteRegister {
   Future<void> showConfirmationDialog(
       BuildContext context, Company company) async {
     return showDialog<void>(
@@ -15,7 +15,7 @@ class Confirmationwidget {
           return AlertDialog(
             title: const Text('Confirmar exclusão'),
             content:
-                const Text('Você tem certeza que deseja excluir esta empresa?'),
+                const Text('Você tem certeza que deseja excluir este registro?'),
             actions: <Widget>[
               TextButton(
                 child: const Text('Cancelar'),

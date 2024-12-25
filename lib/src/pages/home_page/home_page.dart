@@ -60,7 +60,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 ButtomHomePage(
                   func: (() {
-                    Get.toNamed(NameRoutes.homeEquipmentStadard);
+                    Get.toNamed(NameRoutes.listEquipmentStandard);
                   }),
                   nameButtom: 'Equipamentos Padrão',
                 ),

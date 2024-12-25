@@ -1,7 +1,9 @@
 import 'package:app_fullmedcare_v1/src/data/model/equipment_stardard.dart';
 import 'package:app_fullmedcare_v1/src/data/provider/firebase_provider.dart';
 import 'package:app_fullmedcare_v1/src/data/provider/register_equipment_provider.dart';
+import 'package:app_fullmedcare_v1/src/pages/equipment_standard.dart/edit_equipment_standard_page.dart';
 import 'package:app_fullmedcare_v1/src/pages/equipment_standard.dart/list_certificate_equipment_standard_page.dart';
+import 'package:app_fullmedcare_v1/src/routes/name_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -38,17 +40,15 @@ class CustomBottomSheetEquipmentStardad extends StatelessWidget {
             leading: const Icon(Icons.edit),
             title: const Text("Editar Equipamento"),
             onTap: () {
-              // Get.back();
-              // Get.to(() => EditCompanyPage(
-              //       company: company,
-              //     ));
+              Get.back();
+              Get.toNamed(NameRoutes.editEquipmentStandard, arguments: equipmentStandard);
             },
           ),
           ListTile(
             leading: const Icon(Icons.delete),
             title: const Text("Deletar Equipamento"),
             onTap: () {
-              // Get.back();
+              Get.back();
               // Confirmationwidget().showConfirmationDialog(context, company);
             },
           ),

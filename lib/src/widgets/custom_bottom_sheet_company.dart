@@ -39,7 +39,7 @@ class CustomBottomSheetCompany extends StatelessWidget {
             title: const Text("Deletar"),
             onTap: () {
               Get.back();
-              Confirmationwidget().showConfirmationDialog(context, company);
+              ConfirmationDeleteRegister().showConfirmationDialog(context, company);
             },
           ),
         ],

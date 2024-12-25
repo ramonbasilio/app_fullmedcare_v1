@@ -67,6 +67,7 @@ class _EditCompanyPageState extends State<EditCompanyPage> {
 
   @override
   Widget build(BuildContext context) {
+    
     _nameController.text = widget.company.name;
     _cnpjController.text = widget.company.cnpj;
     _cepController.text = widget.company.cep;

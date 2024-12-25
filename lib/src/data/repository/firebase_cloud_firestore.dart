@@ -220,4 +220,52 @@ class FirebaseCloudFirestore {
     });
     return listCertificateEquipmentStandard;
   }
+
+    Future<void> upDateEquipmentStandard(
+      {required EquipmentStandard equipmentStandard, required BuildContext context}) async {
+    try {
+      await _firebaseFirestore
+          .collection('User')
+          .doc('fullmedcare@gmail.com')
+          .collection('Equipment_Standard')
+          .doc(equipmentStandard.id)
+          .update(equipmentStandard.toMap());
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Cadastro atualizado com sucesso!')),
+        );
+      }
+      Get.back();
+    } on FirebaseException catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Falha ao atualizar. Erro: $e')),
+        );
+      }
+    }
+  }
+
+    Future<void> deleteEquipmentStandard(
+      {required EquipmentStandard equipmentStandard, required BuildContext context}) async {
+    try {
+      await _firebaseFirestore
+          .collection('User')
+          .doc('fullmedcare@gmail.com')
+          .collection('Equipment_Standard')
+          .doc(equipmentStandard.id)
+          .delete();
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Cadastro excluído com sucesso!')),
+        );
+      }
+      Get.back();
+    } on FirebaseException catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Falha ao deletar. Erro: $e')),
+        );
+      }
+    }
+  }
 }
