@@ -1,3 +1,4 @@
+import 'package:app_fullmedcare_v1/src/pages/certificate/register_data_certificate_page.dart';
 import 'package:app_fullmedcare_v1/src/pages/company/list_companies_page_search.dart';
 import 'package:app_fullmedcare_v1/src/pages/company/register_company_page.dart';
 import 'package:app_fullmedcare_v1/src/pages/equipment_standard.dart/edit_equipment_standard_page.dart';
@@ -12,6 +13,7 @@ class NameRoutes {
   static const String listCompanies = '/listCompanies';
   static const String listEquipmentStandard = '/listEquipmentStadard';
   static const String editEquipmentStandard = '/editEquipmentStandard';
+  static const String regiterCertificate = '/registerCertificate';
 }
 
 class ListRoutes {
@@ -30,5 +32,8 @@ class ListRoutes {
         page: () => EditEquipmentStandardPage(
               equipmentStandard: Get.arguments,
             )),
+    GetPage(
+        name: NameRoutes.regiterCertificate,
+        page: () => const RegisterDataCertificatePage()),
   ];
 }

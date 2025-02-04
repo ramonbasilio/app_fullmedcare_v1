@@ -21,7 +21,7 @@ class CustomBottomSheetCompany extends StatelessWidget {
             title: const Text("Gerar Certificado"),
             onTap: () {
               Get.back();
-              Get.to(()=>RegisterEquipmentPage());
+              // Get.to(()=>RegisterEquipmentPage());
             },
           ),
           ListTile(

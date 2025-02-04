@@ -21,7 +21,7 @@ class ListCertificateEquipmentStandardPage extends StatelessWidget {
           title: const Text('Certificados de calibração - Equipamento Padrão'),
           centerTitle: true,
           leading: BackButton(onPressed: () {
-            Get.off(()=>ListEquipmentStandartPage());
+            Get.off(()=>const ListEquipmentStandartPage());
           },),
         ),
         body: Padding(

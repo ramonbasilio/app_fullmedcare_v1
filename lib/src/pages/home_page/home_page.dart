@@ -65,7 +65,9 @@ class _HomePageState extends State<HomePage> {
                   nameButtom: 'Equipamentos Padrão',
                 ),
                 ButtomHomePage(
-                  func: (() {}),
+                  func: (() {
+                    Get.toNamed(NameRoutes.regiterCertificate);
+                  }),
                   nameButtom: 'Certificados',
                 ),
               ],

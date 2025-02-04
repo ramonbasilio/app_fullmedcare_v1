@@ -1,4 +1,5 @@
 class Constants {
+
   static Map<String, String> units = {
     "A": "AMPERES",
     "A (DC)": "AMPERES (CORRENTE CONTINUA)",
@@ -102,4 +103,29 @@ class Constants {
     "mV-100mV/1": "TENSÃO ELÉTRICA (DC) - 100MV - CANAL 1",
     "mV-100mV/2": "TENSÃO"
   };
+
+   static List<String> medicalEquipment = [
+    'Eletrocardiógrafo',
+    'Desfibrilador',
+    'Ventilador mecânico',
+    'Bomba de infusão',
+    'Monitor multiparamétrico',
+    'Autoclave',
+    'Oxímetro de pulso',
+    'Ultrassom',
+    'Tomógrafo',
+    'Máquina de raios-X',
+    'Incubadora neonatal',
+    'Mesa cirúrgica',
+    'Lâmpada cirúrgica',
+    'Aspirador cirúrgico',
+    'Estetoscópio',
+    'Foco de exame',
+    'Carrinho de emergência',
+    'Oxigenoterapia',
+    'Nebulizador',
+    'Espirometro',
+    'Bisturi elétrico',
+    'Marcapasso externo',
+    'Eletrocautério'];
 }
