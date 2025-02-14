@@ -14,7 +14,7 @@ class DataCertificatePg1 {
     required this.model,
     required this.manufacturer,
     required this.serialNumber,
-    required this.patrimonial,
+    this.patrimonial = "",
     required this.location,
     required this.listEquipmentsStandardSeletcted,
   });

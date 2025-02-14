@@ -28,6 +28,7 @@ class _RegisterDataCertificatePage1State
   final TextEditingController _controllerLocation = TextEditingController();
   FirebaseProvider firebaseProvider = Get.find();
   List<EquipmentStandard> listEquipmentsStandardSeletcted = [];
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -35,23 +36,25 @@ class _RegisterDataCertificatePage1State
         firebaseProvider.allEquipmentsStandard;
     FirebaseCloudFirestore().getAllEquipmentsStandard();
     medicalEquipmentList.sort((a, b) => a.compareTo(b));
-  
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Emitir Certificado'),
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
-              containerEquipmentData(),
-              const SizedBox(
-                height: 20,
-              ),
-              containerEquipmentStandardAdd(context, listEquipmentsStandard)
-            ],
+        child: Form(
+          key: _formKey,
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              children: [
+                containerEquipmentData(),
+                const SizedBox(
+                  height: 20,
+                ),
+                containerEquipmentStandardAdd(context, listEquipmentsStandard)
+              ],
+            ),
           ),
         ),
       ),
@@ -62,89 +65,97 @@ class _RegisterDataCertificatePage1State
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            ElevatedButton(onPressed: (){
-              Get.toNamed(NameRoutes.regiterCertificatePage2, arguments: DataCertificatePg1(
-                medicalEquipment: nameEquipment!,
-                model: _controllerModelEquipment.text,
-                manufacturer: _controllerManufacturer.text,
-                serialNumber: _controllerSerialNumber.text,
-                patrimonial: _controllerPatrimonio.text,
-                location: _controllerLocation.text,
-                listEquipmentsStandardSeletcted: listEquipmentsStandardSeletcted
-              ));
-            }, child: const Text('Avançar'))
+            ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    print('campos validados com sucesso!!');
+
+                    Get.toNamed(NameRoutes.regiterCertificatePage2,
+                        arguments: DataCertificatePg1(
+                            medicalEquipment: nameEquipment!,
+                            model: _controllerModelEquipment.text,
+                            manufacturer: _controllerManufacturer.text,
+                            serialNumber: _controllerSerialNumber.text,
+                            patrimonial: _controllerPatrimonio.text,
+                            location: _controllerLocation.text,
+                            listEquipmentsStandardSeletcted:
+                                listEquipmentsStandardSeletcted));
+                  }
+                },
+                child: const Text('Avançar'))
           ],
         ),
       ),
     );
   }
 
-  Container containerEquipmentStandardAdd(BuildContext context, List<EquipmentStandard> listEquipmentsStandard) {
+  Container containerEquipmentStandardAdd(
+      BuildContext context, List<EquipmentStandard> listEquipmentsStandard) {
     return Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(10),
-                margin: const EdgeInsets.only(bottom: 20),
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black, width: 2),
-                    borderRadius: BorderRadius.circular(5)),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconButton.outlined(
-                            onPressed: () {
-                              _showCustomBottomSheet(
-                                  context, listEquipmentsStandard);
-                            },
-                            icon: const Icon(Icons.add)),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        const Text(
-                          'Equipamento Padrão',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+        width: double.infinity,
+        padding: const EdgeInsets.all(10),
+        margin: const EdgeInsets.only(bottom: 20),
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.black, width: 2),
+            borderRadius: BorderRadius.circular(5)),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton.outlined(
+                    onPressed: () {
+                      _showCustomBottomSheet(context, listEquipmentsStandard);
+                    },
+                    icon: const Icon(Icons.add)),
+                const SizedBox(
+                  width: 20,
+                ),
+                const Text(
+                  'Equipamento Padrão',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              width: 30,
+            ),
+            listEquipmentsStandardSeletcted.isEmpty
+                ? const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text('Nenhum Equipamento Padrão Selecionado'),
+                  )
+                : ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: listEquipmentsStandardSeletcted.length,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          ListTile(
+                            leading: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    listEquipmentsStandardSeletcted
+                                        .removeAt(index);
+                                  });
+                                },
+                                icon: const Icon(Icons.delete)),
+                            title: TextDetails2(
+                              equipmentStandard:
+                                  listEquipmentsStandardSeletcted[index],
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      width: 30,
-                    ),
-                    listEquipmentsStandardSeletcted.isEmpty
-                        ? const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child:
-                                Text('Nenhum Equipamento Padrão Selecionado'),
-                          )
-                        : ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            itemCount: listEquipmentsStandardSeletcted.length,
-                            itemBuilder: (context, index) {
-                              return Column(
-                                children: [
-                                  ListTile(
-                                    leading: IconButton(onPressed:() {
-                                      setState(() {
-                                        listEquipmentsStandardSeletcted.removeAt(index);
-                                      });
-                                    }, icon: const Icon(Icons.delete)),
-                                    title: TextDetails2(
-                                      equipmentStandard:
-                                          listEquipmentsStandardSeletcted[
-                                              index],
-                                    ),
-                                  ),
-                                  const Divider()
-                                ],
-                              );
-                            },
-                          ),
-                  ],
-                ));
+                          const Divider()
+                        ],
+                      );
+                    },
+                  ),
+          ],
+        ));
   }
 
   Container containerEquipmentData() {
@@ -169,8 +180,9 @@ class _RegisterDataCertificatePage1State
           Row(
             children: [
               Container(
-                width: 347,
-                height: 58,
+                padding: EdgeInsets.all(8),
+                width: 400,
+                height: 60,
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey),
                     borderRadius: BorderRadius.circular(5)),
@@ -179,33 +191,46 @@ class _RegisterDataCertificatePage1State
                   children: [
                     const Text(
                       'Equipamento: ',
-                      style: TextStyle(fontSize: 17),
+                      style: TextStyle(fontSize: 16),
                     ),
-                    DropdownButton<String>(
-                      borderRadius: BorderRadius.circular(5),
-                      focusColor: Colors.white,
-                      value: nameEquipment,
-                      icon: const Icon(Icons.arrow_drop_down),
-                      iconSize: 24,
-                      dropdownColor: Colors.white,
-                      elevation: 0,
-                      style: const TextStyle(color: Colors.black),
-                      underline: Container(
-                        height: 2,
-                        color: Colors.deepPurpleAccent,
+                    Expanded(
+                      child: DropdownButtonFormField<String>(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Selecione um equipamento";
+                          }
+                          return null;
+                        },
+                        decoration: const InputDecoration(
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.deepPurpleAccent),
+                          ),
+                          border: OutlineInputBorder(),
+                        ),
+                        hint: const Text('Selecione um equipamento'),
+                        focusColor: Theme.of(context).scaffoldBackgroundColor,
+                        value: nameEquipment,
+                        icon: const Icon(Icons.arrow_drop_down),
+                        iconSize: 24,
+                        dropdownColor: Colors.grey.shade100,
+                        elevation: 0,
+                        style: const TextStyle(color: Colors.black),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            nameEquipment = newValue!;
+                          });
+                          _formKey.currentState?.validate();
+                        },
+                        items: medicalEquipmentList
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value,
+                                style: const TextStyle(fontSize: 15)),
+                          );
+                        }).toList(),
                       ),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          nameEquipment = newValue!;
-                        });
-                      },
-                      items: medicalEquipmentList
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
                     ),
                   ],
                 ),
@@ -215,6 +240,15 @@ class _RegisterDataCertificatePage1State
               ),
               Flexible(
                 child: TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Insira um modelo";
+                    }
+                    return null;
+                  },
+                  onChanged: (value) {
+                    _formKey.currentState?.validate();
+                  },
                   controller: _controllerModelEquipment,
                   decoration: const InputDecoration(
                     labelText: 'Modelo: ',
@@ -231,7 +265,16 @@ class _RegisterDataCertificatePage1State
             children: [
               Flexible(
                 child: TextFormField(
-                  controller: _controllerModelEquipment,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Insira uma marca";
+                    }
+                    return null;
+                  },
+                  onChanged: (value) {
+                    _formKey.currentState?.validate();
+                  },
+                  controller: _controllerManufacturer,
                   decoration: const InputDecoration(
                     labelText: 'Marca',
                     border: OutlineInputBorder(), // Add border here
@@ -243,6 +286,15 @@ class _RegisterDataCertificatePage1State
               ),
               Flexible(
                 child: TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Insira o número de série";
+                    }
+                    return null;
+                  },
+                  onChanged: (value) {
+                    _formKey.currentState?.validate();
+                  },
                   controller: _controllerSerialNumber,
                   decoration: const InputDecoration(
                     labelText: 'Número de série',
@@ -271,6 +323,15 @@ class _RegisterDataCertificatePage1State
               ),
               Flexible(
                 child: TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Insira o setor do equipamento";
+                    }
+                    return null;
+                  },
+                  onChanged: (value) {
+                    _formKey.currentState?.validate();
+                  },
                   controller: _controllerLocation,
                   decoration: const InputDecoration(
                     labelText: 'Setor',
@@ -316,7 +377,8 @@ class _RegisterDataCertificatePage1State
                                   setState(() {
                                     listEquipmentsStandardSeletcted
                                         .add(listEquipmentsStandard[index]);
-                                        listEquipmentsStandardSeletcted.sort((a, b) => a.type.compareTo(b.type));
+                                    listEquipmentsStandardSeletcted.sort(
+                                        (a, b) => a.type.compareTo(b.type));
                                   });
                                 }
                                 Get.back();
