@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 ButtomHomePage(
                   func: (() {
-                    Get.toNamed(NameRoutes.regiterCertificate);
+                    Get.toNamed(NameRoutes.regiterCertificatePage1);
                   }),
                   nameButtom: 'Certificados',
                 ),

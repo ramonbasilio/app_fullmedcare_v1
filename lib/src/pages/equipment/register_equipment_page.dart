@@ -1,6 +1,6 @@
 import 'package:app_fullmedcare_v1/src/data/model/equipment.dart';
 import 'package:app_fullmedcare_v1/src/data/provider/register_equipment_provider.dart';
-import 'package:app_fullmedcare_v1/src/pages/certificate/register_data_certificate_page.dart';
+import 'package:app_fullmedcare_v1/src/pages/certificate/register_data_certificate_page_1.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -118,7 +118,7 @@ class RegisterEquipmentPage extends StatelessWidget {
                           content: Text('Equipamento cadastrado com sucesso!'),
                         ),
                       );
-                        Get.to(()=>const RegisterDataCertificatePage());
+                        Get.to(()=>const RegisterDataCertificatePage1());
                     }
                   },
                   child: const Text('Avançar'),

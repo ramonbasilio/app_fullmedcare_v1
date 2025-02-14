@@ -1,21 +1,23 @@
 import 'package:app_fullmedcare_v1/src/constants/constants.dart';
+import 'package:app_fullmedcare_v1/src/data/model/dataCertificatePg1.dart';
 import 'package:app_fullmedcare_v1/src/data/model/equipment_stardard.dart';
 import 'package:app_fullmedcare_v1/src/data/provider/firebase_provider.dart';
 import 'package:app_fullmedcare_v1/src/data/repository/firebase_cloud_firestore.dart';
+import 'package:app_fullmedcare_v1/src/routes/name_routes.dart';
 import 'package:app_fullmedcare_v1/src/widgets/text_details_2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class RegisterDataCertificatePage extends StatefulWidget {
-  const RegisterDataCertificatePage({super.key});
+class RegisterDataCertificatePage1 extends StatefulWidget {
+  const RegisterDataCertificatePage1({super.key});
 
   @override
-  State<RegisterDataCertificatePage> createState() =>
-      _RegisterDataCertificatePageState();
+  State<RegisterDataCertificatePage1> createState() =>
+      _RegisterDataCertificatePage1State();
 }
 
-class _RegisterDataCertificatePageState
-    extends State<RegisterDataCertificatePage> {
+class _RegisterDataCertificatePage1State
+    extends State<RegisterDataCertificatePage1> {
   String? nameEquipment;
   List<String> medicalEquipmentList = Constants.medicalEquipment;
   final TextEditingController _controllerModelEquipment =
@@ -51,6 +53,27 @@ class _RegisterDataCertificatePageState
               containerEquipmentStandardAdd(context, listEquipmentsStandard)
             ],
           ),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.all(10),
+        color: Colors.grey.shade300,
+        height: 50,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            ElevatedButton(onPressed: (){
+              Get.toNamed(NameRoutes.regiterCertificatePage2, arguments: DataCertificatePg1(
+                medicalEquipment: nameEquipment!,
+                model: _controllerModelEquipment.text,
+                manufacturer: _controllerManufacturer.text,
+                serialNumber: _controllerSerialNumber.text,
+                patrimonial: _controllerPatrimonio.text,
+                location: _controllerLocation.text,
+                listEquipmentsStandardSeletcted: listEquipmentsStandardSeletcted
+              ));
+            }, child: const Text('Avançar'))
+          ],
         ),
       ),
     );
