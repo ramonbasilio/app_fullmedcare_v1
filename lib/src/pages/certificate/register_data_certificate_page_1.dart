@@ -29,6 +29,21 @@ class _RegisterDataCertificatePage1State
   FirebaseProvider firebaseProvider = Get.find();
   List<EquipmentStandard> listEquipmentsStandardSeletcted = [];
   final _formKey = GlobalKey<FormState>();
+  bool isSelectEquipment = false;
+
+  bool checkListEquipment() {
+    if (listEquipmentsStandardSeletcted.isEmpty) {
+      setState(() {
+        isSelectEquipment = true;
+      });
+      return false;
+    } else {
+      setState(() {
+        isSelectEquipment = false;
+      });
+      return true;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,39 +67,85 @@ class _RegisterDataCertificatePage1State
                 const SizedBox(
                   height: 20,
                 ),
+                isSelectEquipment
+                    ? const Text('Selecione um equipamento padrão',
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red))
+                    : const SizedBox(),
                 containerEquipmentStandardAdd(context, listEquipmentsStandard)
               ],
             ),
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.all(10),
-        color: Colors.grey.shade300,
-        height: 50,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    print('campos validados com sucesso!!');
+      bottomNavigationBar: bottomNavBar(),
+    );
+  }
 
-                    Get.toNamed(NameRoutes.regiterCertificatePage2,
-                        arguments: DataCertificatePg1(
-                            medicalEquipment: nameEquipment!,
-                            model: _controllerModelEquipment.text,
-                            manufacturer: _controllerManufacturer.text,
-                            serialNumber: _controllerSerialNumber.text,
-                            patrimonial: _controllerPatrimonio.text,
-                            location: _controllerLocation.text,
-                            listEquipmentsStandardSeletcted:
-                                listEquipmentsStandardSeletcted));
-                  }
-                },
-                child: const Text('Avançar'))
-          ],
-        ),
+  Container bottomNavBar() {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      color: Colors.grey.shade300,
+      height: 50,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          ElevatedButton(
+              onPressed: () {
+                Get.toNamed(
+                  NameRoutes.regiterCertificatePage2,
+                  arguments: DataCertificatePg1(
+                    medicalEquipment: "Monitor",
+                    model: "Veris 8600",
+                    manufacturer: "Medrad",
+                    serialNumber: "145875",
+                    patrimonial: "PAT12RM",
+                    location: "Ressonancia Magnética",
+                    listEquipmentsStandardSeletcted: [
+                      EquipmentStandard(
+                          type: 'Monitor',
+                          model: 'DX1230',
+                          brand: 'FLuke',
+                          sn: '123475',
+                          tag: '90A9',
+                          id: 'id'),
+                      EquipmentStandard(
+                          type: 'Oximetro',
+                          model: 'DX1230',
+                          brand: 'FLuke',
+                          sn: '123475',
+                          tag: '90A9',
+                          id: 'id'),
+                      EquipmentStandard(
+                          type: 'Ventilador',
+                          model: 'DX1230',
+                          brand: 'FLuke',
+                          sn: '123475',
+                          tag: '90A9',
+                          id: 'id'),
+                    ],
+                  ),
+                );
+                // checkListEquipment();
+                // if (_formKey.currentState!.validate() && checkListEquipment()) {
+                //   print('campos validados com sucesso!!');
+
+                //   Get.toNamed(NameRoutes.regiterCertificatePage2,
+                //       arguments: DataCertificatePg1(
+                //           medicalEquipment: nameEquipment!,
+                //           model: _controllerModelEquipment.text,
+                //           manufacturer: _controllerManufacturer.text,
+                //           serialNumber: _controllerSerialNumber.text,
+                //           patrimonial: _controllerPatrimonio.text,
+                //           location: _controllerLocation.text,
+                //           listEquipmentsStandardSeletcted:
+                //               listEquipmentsStandardSeletcted));
+                // }
+              },
+              child: const Text('Avançar'))
+        ],
       ),
     );
   }
@@ -180,9 +241,9 @@ class _RegisterDataCertificatePage1State
           Row(
             children: [
               Container(
-                padding: EdgeInsets.all(8),
+                padding: const EdgeInsets.all(8),
                 width: 400,
-                height: 60,
+                height: 90,
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey),
                     borderRadius: BorderRadius.circular(5)),
@@ -220,7 +281,7 @@ class _RegisterDataCertificatePage1State
                           setState(() {
                             nameEquipment = newValue!;
                           });
-                          _formKey.currentState?.validate();
+                          // _formKey.currentState?.validate();
                         },
                         items: medicalEquipmentList
                             .map<DropdownMenuItem<String>>((String value) {
@@ -246,9 +307,9 @@ class _RegisterDataCertificatePage1State
                     }
                     return null;
                   },
-                  onChanged: (value) {
-                    _formKey.currentState?.validate();
-                  },
+                  // onChanged: (value) {
+                  //   _formKey.currentState?.validate();
+                  // },
                   controller: _controllerModelEquipment,
                   decoration: const InputDecoration(
                     labelText: 'Modelo: ',
@@ -271,9 +332,9 @@ class _RegisterDataCertificatePage1State
                     }
                     return null;
                   },
-                  onChanged: (value) {
-                    _formKey.currentState?.validate();
-                  },
+                  // onChanged: (value) {
+                  //   _formKey.currentState?.validate();
+                  // },
                   controller: _controllerManufacturer,
                   decoration: const InputDecoration(
                     labelText: 'Marca',
@@ -292,9 +353,9 @@ class _RegisterDataCertificatePage1State
                     }
                     return null;
                   },
-                  onChanged: (value) {
-                    _formKey.currentState?.validate();
-                  },
+                  // onChanged: (value) {
+                  //   _formKey.currentState?.validate();
+                  // },
                   controller: _controllerSerialNumber,
                   decoration: const InputDecoration(
                     labelText: 'Número de série',
@@ -329,9 +390,9 @@ class _RegisterDataCertificatePage1State
                     }
                     return null;
                   },
-                  onChanged: (value) {
-                    _formKey.currentState?.validate();
-                  },
+                  // onChanged: (value) {
+                  //   _formKey.currentState?.validate();
+                  // },
                   controller: _controllerLocation,
                   decoration: const InputDecoration(
                     labelText: 'Setor',
@@ -347,7 +408,9 @@ class _RegisterDataCertificatePage1State
   }
 
   void _showCustomBottomSheet(
-      BuildContext context, List<EquipmentStandard> listEquipmentsStandard) {
+    BuildContext context,
+    List<EquipmentStandard> listEquipmentsStandard,
+  ) {
     showModalBottomSheet(
         isScrollControlled: true,
         context: context,
@@ -375,6 +438,7 @@ class _RegisterDataCertificatePage1State
                                 if (!listEquipmentsStandardSeletcted
                                     .contains(listEquipmentsStandard[index])) {
                                   setState(() {
+                                    isSelectEquipment = false;
                                     listEquipmentsStandardSeletcted
                                         .add(listEquipmentsStandard[index]);
                                     listEquipmentsStandardSeletcted.sort(

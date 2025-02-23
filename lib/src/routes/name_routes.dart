@@ -1,11 +1,14 @@
 import 'package:app_fullmedcare_v1/src/pages/certificate/register_data_certificate_page_1.dart';
 import 'package:app_fullmedcare_v1/src/pages/certificate/register_data_certificate_page_2.dart';
+import 'package:app_fullmedcare_v1/src/pages/certificate/register_data_certificate_page_2NOUSE.dart';
 import 'package:app_fullmedcare_v1/src/pages/company/list_companies_page_search.dart';
 import 'package:app_fullmedcare_v1/src/pages/company/register_company_page.dart';
 import 'package:app_fullmedcare_v1/src/pages/equipment_standard.dart/edit_equipment_standard_page.dart';
 import 'package:app_fullmedcare_v1/src/pages/equipment_standard.dart/list_equipment_standart_page.dart';
 
 import 'package:app_fullmedcare_v1/src/pages/home_page/home_page.dart';
+import 'package:app_fullmedcare_v1/src/pages/units/register_unit_page.dart';
+import 'package:app_fullmedcare_v1/src/pages/units/unit_page.dart';
 import 'package:get/get.dart';
 
 class NameRoutes {
@@ -16,6 +19,8 @@ class NameRoutes {
   static const String editEquipmentStandard = '/editEquipmentStandard';
   static const String regiterCertificatePage1 = '/registerCertificatePage1';
   static const String regiterCertificatePage2 = '/registerCertificatePage2';
+  static const String unitPage = '/unitPage';
+  static const String registerUnitPage = '/registerUnitPage';
 }
 
 class ListRoutes {
@@ -42,5 +47,7 @@ class ListRoutes {
         page: () => RegisterDataCertificatePage2(
               dataCertificatePg1: Get.arguments,
             )),
+    GetPage(name: NameRoutes.unitPage, page: () => const UnitPage()),
+    GetPage(name: NameRoutes.registerUnitPage, page: () => RegisterUnitPage(),)
   ];
 }

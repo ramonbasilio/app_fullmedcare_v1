@@ -5,6 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../model/unit.dart';
+
 class FirebaseCloudFirestore {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
@@ -279,4 +281,51 @@ class FirebaseCloudFirestore {
       }
     }
   }
+
+    Future<void> registerUnits(
+      {required Unit unit,
+      required BuildContext context}) async {
+    try {
+      await _firebaseFirestore
+          .collection('User')
+          .doc('fullmedcare@gmail.com')
+          .collection('Units')
+          .doc(unit.id)
+          .set(unit.toMap());
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Unidade salva com sucesso!')),
+        );
+      }
+      Get.back();
+    } on FirebaseException catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Falha ao salvar. Erro: $e')),
+        );
+      }
+    }
+  }
+
+    Future<List<Unit>> getAllUnits() async {
+    List<Unit> listAllUnits = [];
+    await _firebaseFirestore
+        .collection('User')
+        .doc('fullmedcare@gmail.com')
+        .collection('Units')
+        .get()
+        .then((querySnapshot) {
+      for (var docSnapshot in querySnapshot.docs) {
+        if (docSnapshot.data().isNotEmpty) {
+          listAllUnits
+              .add(Unit.fromMap(docSnapshot.data()));
+        }
+      }
+    });
+    return listAllUnits;
+  }
+
+
+
+
 }

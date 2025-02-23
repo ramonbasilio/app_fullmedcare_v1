@@ -29,6 +29,45 @@ class _HomePageState extends State<HomePage> {
           },
         ),
       ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'FullMedCare',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            ListTile(
+              title: const Text('Unidades de Medida'),
+              onTap: () {
+                Get.back();
+                Get.toNamed(NameRoutes.unitPage);
+              },
+            ),
+            ListTile(
+              title: const Text('Cadastro Base Equipamentos'),
+              onTap: () {
+                Get.back();
+              },
+            ),
+          ],
+        ),
+      ),
       body: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
         child: Padding(

@@ -1,21 +1,26 @@
 import 'package:app_fullmedcare_v1/src/data/model/dataCertificatePg1.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class RegisterDataCertificatePage2 extends StatefulWidget {
+class RegisterDataCertificatePage2NOUSE extends StatefulWidget {
   DataCertificatePg1 dataCertificatePg1;
-  RegisterDataCertificatePage2({required this.dataCertificatePg1, super.key});
+  RegisterDataCertificatePage2NOUSE({required this.dataCertificatePg1, super.key});
 
   @override
-  State<RegisterDataCertificatePage2> createState() =>
+  State<RegisterDataCertificatePage2NOUSE> createState() =>
       _RegisterDataCertificatePage2State();
 }
 
 class _RegisterDataCertificatePage2State
-    extends State<RegisterDataCertificatePage2> {
+    extends State<RegisterDataCertificatePage2NOUSE> {
   TextEditingController tempController = TextEditingController();
   TextEditingController humidityController = TextEditingController();
-  List<String> containers = [];
-  List<Map<String, TextEditingController>> controllersList = [];
+  int point = 0;
+  int? selectedEquipmentIndex;
+  List<Widget> listPoints = [];
+  List<int> containerKeys = [];
+
+  final arguments = Get.arguments;
 
   List<String> getNameEquipments() {
     List<String> result = [];
@@ -26,58 +31,35 @@ class _RegisterDataCertificatePage2State
     return result;
   }
 
-  void _removeContainer(String id, int index) {
-    setState(() {
-      containers.removeWhere((element) => element == id);
-      controllersList.removeAt(index);
-    });
-  }
+  // void _addPoint() {
+  //   setState(() {
+  //     listPoints.add(buildPointField(listPoints.length));
+  //   });
+  // }
 
-  void _clearAllFields(int index){
-    controllersList[index]['value']!.clear();
-    controllersList[index]['unity']!.clear();
-    controllersList[index]['reading1']!.clear();
-    controllersList[index]['reading2']!.clear();
-    controllersList[index]['reading3']!.clear();
+  // void _removePoint(int index) {
+  //   setState(() {
+  //     listPoints.removeAt(index);
+  //   });
+  // }
+
+  void _removeContainer(int key) {
+    setState(() {
+      containerKeys.remove(key);
+    });
   }
 
   void _addContainer() {
     setState(() {
-      containers.add(DateTime.now().toString());
-      controllersList.add({
-        'value': TextEditingController(),
-        'unity': TextEditingController(),
-        'reading1': TextEditingController(),
-        'reading2': TextEditingController(),
-        'reading3': TextEditingController(),
-      });
+      containerKeys.add(DateTime.now().millisecondsSinceEpoch);
     });
-  }
-
-  Widget buildTextField(TextEditingController controller, TextInputType typeKeyboard) {
-    return Container(
-      width: 100,
-      height: 50,
-      margin: const EdgeInsets.symmetric(horizontal: 5),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.black, width: 1),
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: TextFormField(
-        controller: controller,
-        keyboardType: typeKeyboard,
-        decoration: const InputDecoration(
-          contentPadding: EdgeInsets.all(10),
-        ),
-      ),
-    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Registro de Certificado Teste'),
+        title: const Text('Registro de Certificado'),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -96,19 +78,16 @@ class _RegisterDataCertificatePage2State
               child: Text('Pontos de Medição',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             ),
-            containers.isEmpty
+            listPoints.isEmpty
                 ? const Text('Adicione um ponto de medição')
-                : SizedBox(
-                  height: 600,
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      itemCount: containers.length,
-                      itemBuilder: (context, index) {
-                        return buildPointField(index, containers[index]);
-                      },
-                    ),
-                )
+                : ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    itemCount: containerKeys.length,
+                    itemBuilder: (context, index) {
+                      return buildPointField(containerKeys[index]);
+                    },
+                  )
           ]),
         ),
       ),
@@ -117,12 +96,16 @@ class _RegisterDataCertificatePage2State
         color: Colors.grey.shade300,
         height: 50,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Text("Ponto de Medição: ${containers.length}"),
             ElevatedButton(
                 onPressed: () {
                   _addContainer();
+
+                  // setState(() {
+                  //   listPoints.add(buildPointField(listPoints.length));
+                  //   point++;
+                  // });
                 },
                 child: const Text('Adicionar Ponto de Medição')),
           ],
@@ -225,15 +208,38 @@ class _RegisterDataCertificatePage2State
                         ),
                         controller: humidityController,
                       )),
+                  // Row(
+                  //   children: [
+                  //     const SizedBox(width: 120, child: Text("Humidade %")),
+                  //     const SizedBox(
+                  //       width: 10,
+                  //     ),
+                  //     Container(
+                  //         decoration: BoxDecoration(
+                  //             border: Border.all(color: Colors.black, width: 1),
+                  //             borderRadius: BorderRadius.circular(5)),
+                  //         width: 100,
+                  //         height: 50,
+                  //         child: TextFormField(
+                  //           keyboardType: TextInputType.number,
+                  //           decoration: const InputDecoration(
+                  //             contentPadding: EdgeInsets.all(10),
+                  //           ),
+                  //           controller: humidityController,
+                  //         ))
+                  //   ],
+                  // )
                 ],
               ),
             ]));
   }
 
-  Container buildPointField(int index, String id) {
+  Container buildPointField(int index) {
     String? nameEquipment;
+    // int index = listPoints.length;
 
     return Container(
+        key: ValueKey(index),
         width: double.infinity,
         height: 250,
         padding: const EdgeInsets.all(10),
@@ -250,13 +256,14 @@ class _RegisterDataCertificatePage2State
                         fontSize: 20, fontWeight: FontWeight.bold)),
                 IconButton(
                     onPressed: () {
-                      _removeContainer(id, index);
+                      _removeContainer(index);
+                      // setState(() {
+                      //   listPoints.removeAt(pointMeasuer);
+                      //   print('Ponto: ${pointMeasuer + 1}');
+                      //   print('Tamanho da lista: ${listPoints.length}');
+                      // });
                     },
-                    icon: const Icon(Icons.delete)),
-                    const SizedBox(width: 400,),
-                    ElevatedButton(onPressed:() {
-                      _clearAllFields(index);
-                    }, child: const Text('Limpar'))
+                    icon: const Icon(Icons.delete))
               ],
             ),
             Row(
@@ -264,7 +271,7 @@ class _RegisterDataCertificatePage2State
                 const Text('Equipamento Padrão:',
                     style:
                         TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-                const SizedBox(
+                SizedBox(
                   width: 10,
                 ),
                 Flexible(
@@ -293,6 +300,7 @@ class _RegisterDataCertificatePage2State
                       setState(() {
                         nameEquipment = newValue!;
                       });
+                      // _formKey.currentState?.validate();
                     },
                     items: getNameEquipments()
                         .map<DropdownMenuItem<String>>((String value) {
@@ -313,7 +321,19 @@ class _RegisterDataCertificatePage2State
                 const SizedBox(
                   width: 5,
                 ),
-                buildTextField(controllersList[index]['value']!, TextInputType.number),
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black, width: 1),
+                      borderRadius: BorderRadius.circular(5)),
+                  width: 100,
+                  height: 50,
+                  child: TextFormField(
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.all(10),
+                    ),
+                  ),
+                ),
                 const SizedBox(
                   width: 30,
                 ),
@@ -323,7 +343,17 @@ class _RegisterDataCertificatePage2State
                     const SizedBox(
                       width: 5,
                     ),
-                    buildTextField(controllersList[index]['unity']!,  TextInputType.text),
+                    Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black, width: 1),
+                            borderRadius: BorderRadius.circular(5)),
+                        width: 100,
+                        height: 50,
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                            contentPadding: EdgeInsets.all(10),
+                          ),
+                        ))
                   ],
                 ),
               ],
@@ -336,7 +366,19 @@ class _RegisterDataCertificatePage2State
                   const SizedBox(
                     width: 5,
                   ),
-                  buildTextField(controllersList[index]['reading1']!  , TextInputType.number),
+                  Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black, width: 1),
+                        borderRadius: BorderRadius.circular(5)),
+                    width: 100,
+                    height: 50,
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        contentPadding: EdgeInsets.all(10),
+                      ),
+                    ),
+                  ),
                   const SizedBox(
                     width: 30,
                   ),
@@ -346,7 +388,17 @@ class _RegisterDataCertificatePage2State
                       const SizedBox(
                         width: 5,
                       ),
-                      buildTextField(controllersList[index]['reading2']!  , TextInputType.number),
+                      Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black, width: 1),
+                              borderRadius: BorderRadius.circular(5)),
+                          width: 100,
+                          height: 50,
+                          child: TextFormField(
+                            decoration: const InputDecoration(
+                              contentPadding: EdgeInsets.all(10),
+                            ),
+                          ))
                     ],
                   ),
                   const SizedBox(
@@ -358,7 +410,17 @@ class _RegisterDataCertificatePage2State
                       const SizedBox(
                         width: 5,
                       ),
-                      buildTextField(controllersList[index]['reading3']!  , TextInputType.number),
+                      Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black, width: 1),
+                              borderRadius: BorderRadius.circular(5)),
+                          width: 100,
+                          height: 50,
+                          child: TextFormField(
+                            decoration: const InputDecoration(
+                              contentPadding: EdgeInsets.all(10),
+                            ),
+                          ))
                     ],
                   ),
                 ],
