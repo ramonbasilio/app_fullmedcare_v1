@@ -5,12 +5,15 @@ import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
 import '../../data/model/unit.dart';
 
-class RegisterUnitPage extends StatefulWidget {
+class DetailUnitPage extends StatefulWidget {
+  Unit unit;
+  DetailUnitPage({required this.unit, super.key});
+
   @override
-  _RegisterUnitPageState createState() => _RegisterUnitPageState();
+  _DetailUnitPageState createState() => _DetailUnitPageState();
 }
 
-class _RegisterUnitPageState extends State<RegisterUnitPage> {
+class _DetailUnitPageState extends State<DetailUnitPage> {
   final _formKey = GlobalKey<FormState>();
   final _unitNameController = TextEditingController();
   final _unitSymbolController = TextEditingController();
@@ -23,13 +26,23 @@ class _RegisterUnitPageState extends State<RegisterUnitPage> {
     super.dispose();
   }
 
-  void _submitForm() async {
+  void _deleteForm() async {
     if (_formKey.currentState!.validate()) {
       String unitName = _unitNameController.text;
       String unitSymbol = _unitSymbolController.text;
-      Unit unit =
-          Unit(id: const Uuid().v4(), name: unitName, simbol: unitSymbol);
-      firebaseCloudFirestore.registerUnits(unit: unit, context: context);
+      Unit unit = Unit(id: widget.unit.id, name: unitName, simbol: unitSymbol);
+      firebaseCloudFirestore.deleteUnits(unit: unit, context: context);
+      FirebaseProvider firebaseProvider = Get.find();
+      await firebaseProvider.getAllUnits();
+    }
+  }
+
+  void _updateForm() async {
+    if (_formKey.currentState!.validate()) {
+      String unitName = _unitNameController.text;
+      String unitSymbol = _unitSymbolController.text;
+      Unit unit = Unit(id: widget.unit.id, name: unitName, simbol: unitSymbol);
+      firebaseCloudFirestore.updateUnits(unit: unit, context: context);
       FirebaseProvider firebaseProvider = Get.find();
       await firebaseProvider.getAllUnits();
     }
@@ -37,6 +50,9 @@ class _RegisterUnitPageState extends State<RegisterUnitPage> {
 
   @override
   Widget build(BuildContext context) {
+    _unitNameController.text = widget.unit.name;
+    _unitSymbolController.text = widget.unit.simbol;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Registro de Unidades'),
@@ -60,7 +76,7 @@ class _RegisterUnitPageState extends State<RegisterUnitPage> {
               TextFormField(
                 controller: _unitSymbolController,
                 decoration:
-                    const InputDecoration(labelText: 'Simbolo da Unidade'),
+                    const InputDecoration(labelText: 'Simmbolo da Unidade'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Insira o símbolo da unidade';
@@ -69,13 +85,26 @@ class _RegisterUnitPageState extends State<RegisterUnitPage> {
                 },
               ),
               const SizedBox(height: 20),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor:
-                      Colors.green.shade400, // Change this to your desired color
-                ),
-                onPressed: _submitForm,
-                child: const Text('Salvar',style: TextStyle(color: Colors.white)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ElevatedButton(
+                    onPressed: _updateForm,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor:
+                          Colors.blue.shade300,
+                    ),
+                    child: const Text('Atualizar'),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor:
+                          Colors.red.shade400,
+                    ),
+                    onPressed: _deleteForm,
+                    child: const Text('Deletar', style: TextStyle(color: Colors.white),),
+                  ),
+                ],
               ),
             ],
           ),

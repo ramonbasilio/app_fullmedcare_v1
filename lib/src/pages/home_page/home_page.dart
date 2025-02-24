@@ -63,6 +63,7 @@ class _HomePageState extends State<HomePage> {
               title: const Text('Cadastro Base Equipamentos'),
               onTap: () {
                 Get.back();
+                Get.toNamed(NameRoutes.equipmentDatabaseRegistrationPage);
               },
             ),
           ],

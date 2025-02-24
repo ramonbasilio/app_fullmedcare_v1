@@ -1,5 +1,6 @@
 import 'package:app_fullmedcare_v1/src/data/model/certificate_equipment_stantard.dart';
 import 'package:app_fullmedcare_v1/src/data/model/company.dart';
+import 'package:app_fullmedcare_v1/src/data/model/equipment_name.dart';
 import 'package:app_fullmedcare_v1/src/data/model/equipment_stardard.dart';
 import 'package:app_fullmedcare_v1/src/data/repository/firebase_cloud_firestore.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,7 @@ class FirebaseProvider extends GetxController {
   var allEquipmentsStandard = <EquipmentStandard>[].obs;
   var allCertificateEquipamentStandard = <CertificateEquipmentStandard>[].obs;
   var allUnits = <Unit>[].obs;
+  var allEquipmentsStandardName = <EquipmentName>[].obs;
   RxBool isLoading = false.obs; //PRECISO ARRUMAR ISSO
 
   FirebaseCloudFirestore firebaseCloudFirestore = FirebaseCloudFirestore();
@@ -61,6 +63,17 @@ class FirebaseProvider extends GetxController {
     }
     else{
       allUnits.value = [];
+    }
+  }
+
+    Future<void> getAllEquipmentNames()async{
+    List<EquipmentName> response = await firebaseCloudFirestore.getAllEquipmentStandardNames();
+    if(response.isNotEmpty){
+      response.sort((a,b)=> a.name.compareTo(b.name));
+      allEquipmentsStandardName.value = response;
+    }
+    else{
+      allEquipmentsStandardName.value = [];
     }
   }
   

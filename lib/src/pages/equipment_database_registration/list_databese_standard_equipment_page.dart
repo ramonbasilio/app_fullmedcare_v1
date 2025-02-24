@@ -4,18 +4,18 @@ import 'package:app_fullmedcare_v1/src/routes/name_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class UnitPage extends StatelessWidget {
-  const UnitPage({super.key});
+class ListDatabaseStandardEquipment extends StatelessWidget {
+  const ListDatabaseStandardEquipment({super.key});
 
   @override
   Widget build(BuildContext context) {
     FirebaseProvider firebaseProvider = Get.find();
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Unidades de Medidas'),
+          title: const Text('Base de Nomes de Equipamentos Padrão'),
                   leading: BackButton(
           onPressed: () {
-            Get.offAndToNamed(NameRoutes.home);
+            Get.offAndToNamed(NameRoutes.equipmentDatabaseRegistrationPage);
           },
         ),
         ),
@@ -25,20 +25,18 @@ class UnitPage extends StatelessWidget {
             children: [
               Flexible(
                 child: Obx(
-                  () => firebaseProvider.allUnits.isEmpty
-                      ? const Text('Sem unidades salvas')
+                  () => firebaseProvider.allEquipmentsStandardName.isEmpty
+                      ? const Text('Nenhum equipamento padrão salvo')
                       : ListView.builder(
-                          itemCount: firebaseProvider.allUnits.length,
+                          itemCount: firebaseProvider.allEquipmentsStandardName.length,
                           itemBuilder: (context, index) {
-                            final unit = firebaseProvider.allUnits;
+                            final data = firebaseProvider.allEquipmentsStandardName;
                             return Column(
                               children: [
                                 ListTile(
                                   leading: Text((index + 1).toString()),
-                                  title: Text('Nome: ${unit[index].name}'),
-                                  subtitle: Text('Simbolo: ${unit[index].simbol}'),
+                                  title: Text(data[index].name),
                                   onTap: () {
-                                    Get.toNamed(NameRoutes.detailUnitPage, arguments: unit[index]);
                                   },
 
                                 ),
@@ -53,7 +51,7 @@ class UnitPage extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Get.toNamed(NameRoutes.registerUnitPage);
+
           },
           child: const Icon(Icons.add),
         ));

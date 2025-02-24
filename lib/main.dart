@@ -17,6 +17,7 @@ void main() async {
   await firebaseProvider.getAllCompanies();
   await firebaseProvider.getAllEquipmentsStandard();
   await firebaseProvider.getAllUnits();
+  await firebaseProvider.getAllEquipmentNames();
 
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => RegisterEquipmentProvider()),

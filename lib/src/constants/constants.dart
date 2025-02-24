@@ -1,5 +1,4 @@
 class Constants {
-
   static Map<String, String> units = {
     "A": "AMPERES",
     "A (DC)": "AMPERES (CORRENTE CONTINUA)",
@@ -104,28 +103,46 @@ class Constants {
     "mV-100mV/2": "TENSÃO"
   };
 
-   static List<String> medicalEquipment = [
-    'Eletrocardiógrafo',
-    'Desfibrilador',
-    'Ventilador mecânico',
-    'Bomba de infusão',
-    'Monitor multiparamétrico',
-    'Autoclave',
-    'Oxímetro de pulso',
-    'Ultrassom',
-    'Tomógrafo',
-    'Máquina de raios-X',
-    'Incubadora neonatal',
-    'Mesa cirúrgica',
-    'Lâmpada cirúrgica',
-    'Aspirador cirúrgico',
-    'Estetoscópio',
-    'Foco de exame',
-    'Carrinho de emergência',
-    'Oxigenoterapia',
-    'Nebulizador',
-    'Espirometro',
+  static List<String> medicalEquipment = [
+    'Aparelho de raios-X',
+    'Aparelho de ressonância magnética (RM)',
+    'Aparelho de ultrassom',
     'Bisturi elétrico',
-    'Marcapasso externo',
-    'Eletrocautério'];
+    'Bomba de infusão',
+    'Desfibrilador externo automático (DEA)',
+    'Eletrocardiógrafo (ECG)',
+    'Esfigmomanômetro',
+    'Estetoscópio',
+    'Destro',
+    'Lâmpada de fenda',
+    'Aparelho de anestesia',
+    'Microscópio cirúrgico',
+    'Monitor de frequência cardíaca',
+    'Monitor de sinais vitais',
+    'Oxímetro de pulso',
+    'Termômetro digital',
+    'Tomógrafo computadorizado (CT)',
+    'Ventilador mecânico'
+  ];
+
+  static List<String> equipamentosCalibracao = [
+    "Multímetro",
+    "Amperímetro",
+    "Osciloscópio",
+    "Analisador de Temperatura/Umidade",
+    "Analisador de ECG",
+    "Analisador de Oximetria",
+    "Analisador de Pressão Não Invasiva",
+    "Analisador de Pressão Invasiva",
+    "Analisador de Segurança Elétrica",
+    "Analisador de Gás Anestésico",
+    "Analisador de Bisturi",
+    "Analisador de Infusão",
+    "Analisador de Ventilação",
+    "Analisador de O2",
+    "Analisador de Desfibriladores",
+    "Analisador de Bomba de Infusão",
+    "Analisador de Ultrassom",
+    "Medidores de Radiação e Dosímetros"
+  ];
 }

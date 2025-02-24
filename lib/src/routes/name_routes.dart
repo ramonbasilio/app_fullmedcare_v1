@@ -1,12 +1,13 @@
 import 'package:app_fullmedcare_v1/src/pages/certificate/register_data_certificate_page_1.dart';
 import 'package:app_fullmedcare_v1/src/pages/certificate/register_data_certificate_page_2.dart';
-import 'package:app_fullmedcare_v1/src/pages/certificate/register_data_certificate_page_2NOUSE.dart';
 import 'package:app_fullmedcare_v1/src/pages/company/list_companies_page_search.dart';
 import 'package:app_fullmedcare_v1/src/pages/company/register_company_page.dart';
+import 'package:app_fullmedcare_v1/src/pages/equipment_database_registration/equipment_database_registration_home_page.dart';
+import 'package:app_fullmedcare_v1/src/pages/equipment_database_registration/list_databese_standard_equipment_page.dart';
 import 'package:app_fullmedcare_v1/src/pages/equipment_standard.dart/edit_equipment_standard_page.dart';
 import 'package:app_fullmedcare_v1/src/pages/equipment_standard.dart/list_equipment_standart_page.dart';
-
 import 'package:app_fullmedcare_v1/src/pages/home_page/home_page.dart';
+import 'package:app_fullmedcare_v1/src/pages/units/detail_unit_page.dart';
 import 'package:app_fullmedcare_v1/src/pages/units/register_unit_page.dart';
 import 'package:app_fullmedcare_v1/src/pages/units/unit_page.dart';
 import 'package:get/get.dart';
@@ -21,6 +22,9 @@ class NameRoutes {
   static const String regiterCertificatePage2 = '/registerCertificatePage2';
   static const String unitPage = '/unitPage';
   static const String registerUnitPage = '/registerUnitPage';
+  static const String detailUnitPage = '/detailUnitPage';
+  static const String equipmentDatabaseRegistrationPage = "/equipmentDatabaseRegistrationPage";
+  static const String listDatabaseStandardEquipment = "/listDatabaseStandardEquipment";
 }
 
 class ListRoutes {
@@ -48,6 +52,9 @@ class ListRoutes {
               dataCertificatePg1: Get.arguments,
             )),
     GetPage(name: NameRoutes.unitPage, page: () => const UnitPage()),
-    GetPage(name: NameRoutes.registerUnitPage, page: () => RegisterUnitPage(),)
+    GetPage(name: NameRoutes.registerUnitPage, page: () => RegisterUnitPage(),),
+    GetPage(name: NameRoutes.detailUnitPage, page: () => DetailUnitPage(unit: Get.arguments),),
+    GetPage(name: NameRoutes.equipmentDatabaseRegistrationPage, page: () => const EquipmentDatabaseRegistrationHomePage(),),
+    GetPage(name: NameRoutes.listDatabaseStandardEquipment, page: () => const ListDatabaseStandardEquipment(),)
   ];
 }
