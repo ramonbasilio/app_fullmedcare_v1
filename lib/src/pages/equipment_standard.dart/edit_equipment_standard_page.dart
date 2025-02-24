@@ -135,6 +135,7 @@ class _EditEquipmentStandardPageState extends State<EditEquipmentStandardPage> {
                         sn: snController.text,
                         tag: tagController.text,
                         id: widget.equipmentStandard.id,
+                        unit: widget.equipmentStandard.unit,
                       );
                      await firebaseCloudFirestore.upDateEquipmentStandard(equipmentStandard: equipmentStandard, context: context);
                     await firebaseProvider.getAllEquipmentsStandard();

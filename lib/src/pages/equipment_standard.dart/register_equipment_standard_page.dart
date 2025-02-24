@@ -1,4 +1,6 @@
+import 'package:app_fullmedcare_v1/src/data/model/equipment_name.dart';
 import 'package:app_fullmedcare_v1/src/data/model/equipment_stardard.dart';
+import 'package:app_fullmedcare_v1/src/data/model/unit.dart';
 import 'package:app_fullmedcare_v1/src/data/provider/firebase_provider.dart';
 import 'package:app_fullmedcare_v1/src/data/repository/firebase_cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +18,15 @@ class RegisterEquipmentStandardPage extends StatelessWidget {
     TextEditingController snController = TextEditingController();
     TextEditingController tagController = TextEditingController();
     FirebaseProvider firebaseProvider = Get.find();
+    List<EquipmentName> allEquipmentsStandardName =
+        firebaseProvider.allEquipmentsStandardName;
+    List<Unit> allUnits = firebaseProvider.allUnits;
+    List<String> equipmentNames =
+        allEquipmentsStandardName.map((e) => e.name).toList();
+    List<String> unitsNames =
+        allUnits.map((e) => '${e.name} - ${e.simbol}').toList();
+    String type = '';
+    String unit = '';
 
     return Scaffold(
       appBar: AppBar(
@@ -28,34 +39,28 @@ class RegisterEquipmentStandardPage extends StatelessWidget {
           child: ListView(
             children: [
               // Tipo do equipamento
-              TextFormField(
-                controller: typeController,
+              DropdownButtonFormField<String>(
                 decoration: const InputDecoration(
                   labelText: 'Tipo do Equipamento',
                   border: OutlineInputBorder(),
                 ),
+                items: equipmentNames.map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  type = newValue!;
+                },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Por favor, insira o tipo do equipamento';
+                    return 'Por favor, selecione o tipo do equipamento';
                   }
                   return null;
                 },
               ),
-              const SizedBox(height: 16),
 
-              TextFormField(
-                controller: modelController,
-                decoration: const InputDecoration(
-                  labelText: 'Modelo do Equipamento',
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Por favor, insira o modelo do equipamento';
-                  }
-                  return null;
-                },
-              ),
               const SizedBox(height: 16),
               // Marca do equipamento
               TextFormField(
@@ -72,10 +77,20 @@ class RegisterEquipmentStandardPage extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 16),
-
-              // Modelo do equipamento
-
-              // Número de Série (NS)
+              TextFormField(
+                controller: modelController,
+                decoration: const InputDecoration(
+                  labelText: 'Modelo do Equipamento',
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor, insira o modelo do equipamento';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
               TextFormField(
                 controller: snController,
                 decoration: const InputDecoration(
@@ -106,26 +121,47 @@ class RegisterEquipmentStandardPage extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 16),
-
+              DropdownButtonFormField<String>(
+                decoration: const InputDecoration(
+                  labelText: 'Unidade de Medida',
+                  border: OutlineInputBorder(),
+                ),
+                items: unitsNames.map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  unit = newValue!;
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor, selecione o unidade de medida do equipamento';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
               // Botão de salvar
               ElevatedButton(
-                onPressed: () async{
+                onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     FirebaseCloudFirestore firebaseCloudFirestore =
                         FirebaseCloudFirestore();
                     EquipmentStandard equipmentStandard = EquipmentStandard(
-                      type: typeController.text,
+                      type: type,
                       model: modelController.text,
                       brand: brandController.text,
                       sn: snController.text,
                       tag: tagController.text,
                       id: const Uuid().v4(),
+                      unit: unit,
                     );
-                   await firebaseCloudFirestore.registerEquipmentStandard(equipmentStandard: equipmentStandard, context: context);
-                  await firebaseProvider.getAllEquipmentsStandard();
-
+                    await firebaseCloudFirestore.registerEquipmentStandard(
+                        equipmentStandard: equipmentStandard, context: context);
+                    await firebaseProvider.getAllEquipmentsStandard();
                   }
-                  
                 },
                 child: const Text('Salvar'),
               ),

@@ -8,6 +8,7 @@ class EquipmentStandard {
   String sn;
   String tag;
   String id;
+  String unit;
   
   EquipmentStandard({
     required this.type,
@@ -16,6 +17,7 @@ class EquipmentStandard {
     required this.sn,
     required this.tag,
     required this.id,
+    required this.unit,
   });
 
   Map<String, dynamic> toMap() {
@@ -26,6 +28,7 @@ class EquipmentStandard {
       'sn': sn,
       'tag':tag,
       'id': id,
+      'unit': unit,
     };
   }
 
@@ -37,6 +40,7 @@ class EquipmentStandard {
       sn: map['sn'] as String,
       tag: map['tag'] as String,
       id: map['id'] as String,
+      unit: map['unit'] as String,
     );
   }
 
