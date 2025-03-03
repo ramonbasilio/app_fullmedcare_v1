@@ -25,6 +25,7 @@ class RegisterEquipmentStandardPage extends StatelessWidget {
         allEquipmentsStandardName.map((e) => e.name).toList();
     List<String> unitsNames =
         allUnits.map((e) => '${e.name} - ${e.simbol}').toList();
+        
     String type = '';
     String unit = '';
 

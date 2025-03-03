@@ -42,6 +42,7 @@ class EquipmentDatabaseRegistrationHomePage extends StatelessWidget {
               width: 400,
               child: ElevatedButton(
                 onPressed: () {
+                  Get.toNamed(NameRoutes.listDatabaseBiomedicalEquipment);
                 },
                 child: const Text('Cadastro de Equipamentos Médicos'),
               ),

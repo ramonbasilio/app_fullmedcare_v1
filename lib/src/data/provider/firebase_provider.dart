@@ -13,9 +13,22 @@ class FirebaseProvider extends GetxController {
   var allCertificateEquipamentStandard = <CertificateEquipmentStandard>[].obs;
   var allUnits = <Unit>[].obs;
   var allEquipmentsStandardName = <EquipmentName>[].obs;
+  var allBiomedicalEquipmentsNames = <EquipmentName>[].obs;
+  RxBool loadingInitial = false.obs;
   RxBool isLoading = false.obs; //PRECISO ARRUMAR ISSO
 
   FirebaseCloudFirestore firebaseCloudFirestore = FirebaseCloudFirestore();
+
+  Future<void> loadingAllFunctions(FirebaseProvider firebaseProvider) async {
+    loadingInitial.value = true;
+    await Future.delayed(const Duration(seconds: 5));
+    await firebaseProvider.getAllCompanies();
+    await firebaseProvider.getAllEquipmentsStandard();
+    await firebaseProvider.getAllUnits();
+    await firebaseProvider.getAllStandardEquipmentNames();
+    await firebaseProvider.getAllBiomedicalEquipmentsNames();
+    loadingInitial.value = false;
+  }
 
   Future<void> getAllCompanies() async {
     isLoading.value = true;
@@ -55,26 +68,35 @@ class FirebaseProvider extends GetxController {
     isLoading.value = false;
   }
 
-  Future<void> getAllUnits()async{
+  Future<void> getAllUnits() async {
     List<Unit> response = await firebaseCloudFirestore.getAllUnits();
-    if(response.isNotEmpty){
-      response.sort((a,b)=> a.name.compareTo(b.name));
+    if (response.isNotEmpty) {
+      response.sort((a, b) => a.name.compareTo(b.name));
       allUnits.value = response;
-    }
-    else{
+    } else {
       allUnits.value = [];
     }
   }
 
-    Future<void> getAllEquipmentNames()async{
-    List<EquipmentName> response = await firebaseCloudFirestore.getAllEquipmentStandardNames();
-    if(response.isNotEmpty){
-      response.sort((a,b)=> a.name.compareTo(b.name));
+  Future<void> getAllStandardEquipmentNames() async {
+    List<EquipmentName> response =
+        await firebaseCloudFirestore.getAllEquipmentStandardNames();
+    if (response.isNotEmpty) {
+      response.sort((a, b) => a.name.compareTo(b.name));
       allEquipmentsStandardName.value = response;
-    }
-    else{
+    } else {
       allEquipmentsStandardName.value = [];
     }
   }
-  
+
+  Future<void> getAllBiomedicalEquipmentsNames() async {
+    List<EquipmentName> response =
+        await firebaseCloudFirestore.getAllEquipmentBiomedicaldNames();
+    if (response.isNotEmpty) {
+      response.sort((a, b) => a.name.compareTo(b.name));
+      allBiomedicalEquipmentsNames.value = response;
+    } else {
+      allBiomedicalEquipmentsNames.value = [];
+    }
+  }
 }

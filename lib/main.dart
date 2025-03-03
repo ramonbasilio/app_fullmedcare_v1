@@ -14,10 +14,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   FirebaseProvider firebaseProvider = Get.put(FirebaseProvider());
-  await firebaseProvider.getAllCompanies();
-  await firebaseProvider.getAllEquipmentsStandard();
-  await firebaseProvider.getAllUnits();
-  await firebaseProvider.getAllEquipmentNames();
+  firebaseProvider.loadingAllFunctions(firebaseProvider);
 
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => RegisterEquipmentProvider()),
@@ -31,7 +28,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      initialRoute: NameRoutes.home,
+      initialRoute: NameRoutes.splash,
       getPages: ListRoutes.listRoutes,
       debugShowCheckedModeBanner: false,
       title: 'Fullmedcare V1',

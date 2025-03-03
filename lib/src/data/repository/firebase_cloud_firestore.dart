@@ -454,4 +454,22 @@ class FirebaseCloudFirestore {
     });
     return listAllEquipmentNames;
   }
+
+    Future<List<EquipmentName>> getAllEquipmentBiomedicaldNames() async {
+    List<EquipmentName> listAllEquipmentNames = [];
+
+    await _firebaseFirestore
+        .collection('User')
+        .doc('fullmedcare@gmail.com')
+        .collection('Equipment_Medical_Name')
+        .get()
+        .then((querySnapshot) {
+      for (var docSnapshot in querySnapshot.docs) {
+        if (docSnapshot.data().isNotEmpty) {
+          listAllEquipmentNames.add(EquipmentName.fromMap(docSnapshot.data()));
+        }
+      }
+    });
+    return listAllEquipmentNames;
+  }
 }
