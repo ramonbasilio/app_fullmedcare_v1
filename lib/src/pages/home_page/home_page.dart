@@ -6,6 +6,8 @@ import 'package:app_fullmedcare_v1/src/widgets/buttom_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../certificate/certificate_ecg_page.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -64,7 +66,8 @@ class _HomePageState extends State<HomePage> {
                   nameButtom: 'Equipamentos Padrão',
                 ),
                 ButtomHomePage(
-                  func: (() {}),
+                  func: (() {
+                  Get.to(()=>const CertificateEcgPage());}),
                   nameButtom: 'Certificados',
                 ),
               ],
